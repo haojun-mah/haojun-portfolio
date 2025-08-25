@@ -1,0 +1,17 @@
+{
+  "node": {
+    "007aa7390ef9a4678cb1c2071cf376dfc3a90d45ef": {
+      "workers": {
+        "app/(main-page)/home/page": {
+          "moduleId": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CCode%5C%5Chaojun-portfolio%5C%5Capp%5C%5C(main-page)%5C%5Chome%5C%5Cpage.tsx%22%2C%5B%7B%22id%22%3A%22007aa7390ef9a4678cb1c2071cf376dfc3a90d45ef%22%2C%22exportedName%22%3A%22default%22%7D%5D%5D%5D&__client_imported__=!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/(main-page)/home/page": "rsc"
+      }
+    }
+  },
+  "edge": {},
+  "encryptionKey": "Q88wlvqHuF/BeLbaJDzl4eVTh63kuN61OgC6tAlTElU="
+}
