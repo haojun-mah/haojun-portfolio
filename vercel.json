@@ -1,3 +1,10 @@
 {
-  "framework": "nextjs"
+  "version": 2,
+  "framework": "nextjs",
+  "installCommand": "npm install --legacy-peer-deps",
+  "build": {
+    "env": {
+      "NPM_CONFIG_LEGACY_PEER_DEPS": "true"
+    }
+  }
 }
