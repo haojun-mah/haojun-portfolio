@@ -53,7 +53,7 @@ export default function DeleteBlogButton({ blogId, blogTitle }: DeleteBlogButton
     <div className="bg-destructive/10 border border-destructive rounded-lg p-4">
       <h3 className="text-destructive font-semibold mb-2">Delete Blog Post</h3>
       <p className="text-sm text-muted-foreground mb-4">
-        Are you sure you want to delete "<strong>{blogTitle}</strong>"? This action cannot be undone.
+        Are you sure you want to delete &quot;<strong>{blogTitle}</strong>&quot;? This action cannot be undone.
       </p>
       
       {error && (

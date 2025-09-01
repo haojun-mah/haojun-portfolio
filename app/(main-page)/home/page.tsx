@@ -29,7 +29,7 @@ export default async function Home() {
               <BlurFade delay={BLUR_FADE_DELAY * 1}>
                 <div>
                 <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-                  Hi, I'm <span className="text-primary">Hao Jun</span>
+                  Hi, I&apos;m <span className="text-primary">Hao Jun</span>
                   <br />
                   I love to <PointerHighlight rectangleClassName="bg-neutral-200 dark:bg-neutral-700 border-neutral-300 dark:border-neutral-600 leading-loose"
                                               pointerClassName="text-yellow-500 h-3 w-3"
@@ -104,7 +104,7 @@ export default async function Home() {
               <br/>
               <div className="space-y-4 text-primary">
                 <p>
-                  I'm a <span className="font-bold text-foreground">Year 2
+                  I&apos;m a <span className="font-bold text-foreground">Year 2
                   Computer Science</span> student at the <span
                   className="font-bold text-foreground">National University of
                   Singapore</span> with a passion for building impactful
@@ -115,14 +115,14 @@ export default async function Home() {
                   text-foreground">tech for good</span>.
                 </p>
                <p>
-                  As an <span className="font-bold text-foreground">aspiring entrepreneur</span>, I'm also excited about
+                  As an <span className="font-bold text-foreground">aspiring entrepreneur</span>, I&apos;m also excited about
                   entrepreneurial ventures and
                   startups, where I can build productive products that positively
                   benefit lives. My technical interests lie in <span className="font-bold text-foreground">agentic AI and
                   hacking for good</span>.
                 </p>
                   <p>
-                  In the past, I've interned as a <span className="font-bold text-foreground">software engineer, taught
+                  In the past, I&apos;ve interned as a <span className="font-bold text-foreground">software engineer, taught
                   programming lessons and taken on freelance software development
                   projects.</span> I am looking for more opportunities to grow and
                   interested in <span className="font-bold text-foreground">working for a start up</span>.
@@ -229,7 +229,7 @@ export default async function Home() {
         <BlurFade delay={BLUR_FADE_DELAY * 20}>
           <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
             <div className="bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 border border-border rounded-2xl p-6 sm:p-8 lg:p-10 text-center">
-              <h2 className="text-2xl sm:text-3xl font-bold">Let's build something great</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold">Let&apos;s build something great</h2>
               <p className="text-muted-foreground mt-2 text-sm sm:text-base">Available for freelance and full‑time roles</p>
               <div className="mt-4 sm:mt-6">
                 <Link href="mailto:mahhaojun03@gmail.com" className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition text-sm sm:text-base">Contact Me</Link>

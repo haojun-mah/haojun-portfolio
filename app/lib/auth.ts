@@ -26,7 +26,7 @@ export function verifyToken(token: string): AdminPayload | null {
     }
     const decoded = jwt.verify(token, JWT_SECRET);
     return decoded as AdminPayload;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

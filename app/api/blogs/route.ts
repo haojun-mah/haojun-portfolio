@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
                 readTime: blogData.readTime || "5 min read",
                 tags: blogData.tags || [],
                 featuredImage: featuredImageUrl || "",
-                content: updatedContent as any, 
+                content: updatedContent, 
             },
         });
         
@@ -214,7 +214,7 @@ export async function DELETE(request: NextRequest) {
         }
 
         // Extract content image IDs
-        const content = existingBlog.content as any[];
+        const content = existingBlog.content as unknown[];
         if (Array.isArray(content)) {
             content.forEach(block => {
                 if (block.type === 'image' && block.src) {

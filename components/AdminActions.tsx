@@ -19,7 +19,7 @@ export default function AdminActions({ blogId, blogTitle }: AdminActionsProps) {
         const response = await fetch('/api/auth/status');
         const data = await response.json();
         setIsAdmin(data.isAdmin === true);
-      } catch (error) {
+      } catch {
         setIsAdmin(false);
       } finally {
         setLoading(false);

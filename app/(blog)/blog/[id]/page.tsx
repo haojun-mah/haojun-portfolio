@@ -74,7 +74,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
         images: blog.featuredImage ? [blog.featuredImage] : [],
       },
     };
-  } catch (error) {
+  } catch {
     return {
       title: 'Blog',
       description: 'Blog post'

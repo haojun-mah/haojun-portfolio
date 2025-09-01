@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Icons } from "@/components/icons";
 import StackIcon from "tech-stack-icons";
 import { useTheme } from "next-themes";
 import Image from "next/image";

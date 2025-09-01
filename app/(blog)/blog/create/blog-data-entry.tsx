@@ -6,7 +6,6 @@ import { BlogData } from './types'
 import {
   QueryClient,
   QueryClientProvider,
-  useQuery,
 } from '@tanstack/react-query'
 
 const queryClient = new QueryClient()
@@ -80,7 +79,7 @@ export default function CreateBlogForm() {
     }))
   }
 
-  const updateContentBlock = (index: number, updates: any) => {
+  const updateContentBlock = (index: number, updates: Partial<ContentBlock>) => {
     setFormData(prev => ({
       ...prev,
       content: prev.content.map((block, i) => 
