@@ -10,7 +10,7 @@ import { educationData, workExperience, projectData } from "@/lib/data";
 import Image from "next/image";
 
 const BLUR_FADE_DELAY = 0.04;
-const currentHacking = "Productivity Solutions for Developers";
+const currentHacking = "GrocerPicker Startup Validation";
 
 
 

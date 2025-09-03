@@ -5,13 +5,13 @@ import React from "react";
 interface CustomLinkProps {
   href: string;
   children?: React.ReactNode;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 interface RoundedImageProps {
   alt: string;
   src: string;
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
@@ -37,25 +37,26 @@ function Table({ data }: { data: { headers: string[]; rows: string[][] } }) {
 }
 
 function CustomLink(props: CustomLinkProps) {
-  const href = props.href;
+  const { href, children, ...rest } = props;
 
   if (href.startsWith("/")) {
     return (
-      <Link href={href} {...props}>
-        {props.children}
+      <Link href={href} {...rest}>
+        {children}
       </Link>
     );
   }
 
   if (href.startsWith("#")) {
-    return <a {...props} />;
+    return <a href={href} {...rest} />;
   }
 
-  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+  return <a href={href} target="_blank" rel="noopener noreferrer" {...rest} />;
 }
 
 function RoundedImage(props: RoundedImageProps) {
-  return <Image alt={props.alt} className="rounded-lg" {...props} />;
+  const { alt, src, ...rest } = props;
+  return <Image alt={alt} src={src} className="rounded-lg" {...rest} />;
 }
 
 // This replaces rehype-slug

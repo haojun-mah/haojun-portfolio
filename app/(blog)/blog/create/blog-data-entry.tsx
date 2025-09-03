@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { BlogData } from './types'
+import { BlogData, ContentBlock } from './types'
 import {
   QueryClient,
   QueryClientProvider,

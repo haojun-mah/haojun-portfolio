@@ -50,7 +50,7 @@ export interface BlogData {
 const prisma = new PrismaClient();
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: { id: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
   const resolvedParams = await params;
   
   try {
@@ -83,7 +83,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 }
 
 // Server component for dynamic blog page
-export default async function BlogReadPage({ params }: { params: { id: string } }) {
+export default async function BlogReadPage({ params }: { params: Promise<{ id: string }> }) {
   let blog: BlogData | null = null;
   
   try {

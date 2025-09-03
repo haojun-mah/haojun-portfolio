@@ -103,7 +103,7 @@ export async function POST(request: NextRequest) {
                 readTime: blogData.readTime || "5 min read",
                 tags: blogData.tags || [],
                 featuredImage: featuredImageUrl || "",
-                content: updatedContent, 
+                content: JSON.parse(JSON.stringify(updatedContent)), // Ensure proper JSON serialization for Prisma
             },
         });
         
@@ -216,9 +216,10 @@ export async function DELETE(request: NextRequest) {
         // Extract content image IDs
         const content = existingBlog.content as unknown[];
         if (Array.isArray(content)) {
-            content.forEach(block => {
-                if (block.type === 'image' && block.src) {
-                    const imageIdMatch = block.src.match(/\/api\/images\/([^\/]+)$/);
+            content.forEach((block: unknown) => {
+                const imageBlock = block as { type?: string; src?: string };
+                if (imageBlock.type === 'image' && imageBlock.src) {
+                    const imageIdMatch = imageBlock.src.match(/\/api\/images\/([^\/]+)$/);
                     if (imageIdMatch) {
                         imageIds.push(imageIdMatch[1]);
                     }
