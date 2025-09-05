@@ -273,22 +273,4 @@ export const DATA = {
       end: "2021",
       description: ["Grade: AAAA/A"]
     },
-    {
-      school: "Chung Cheng High School (Main)",
-      href: "https://www.chungchenghighmain.moe.edu.sg/",
-      degree: "Singapore-Cambridge GCE O-Level",
-      logoUrl: "/cchm.jpg",
-      start: "2016",
-      end: "2019",
-      description: ["Grade: 7 Distinctions"]
-    },
-    {
-      school: "Pei Chun Public School",
-      href: "https://www.peichunpublic.moe.edu.sg/",
-      degree: "Primary School Leaving Exam",
-      logoUrl: "/pcps.jpg",
-      start: "2010",
-      end: "2015",
-      description: ["Grade: 4 Distinctions"]
-    },
   ];

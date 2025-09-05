@@ -80,11 +80,11 @@ export default async function Home() {
         </section>
 
         {/* About Me Section */}
-        <section className="max-w-7xl mx-auto px-6 py-5">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
+        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
             {/* About Me Card - Left Side */}
             <BlurFade delay={BLUR_FADE_DELAY * 3}>
-              <div className="relative">
+              <div className="relative order-2 lg:order-1">
               <div className="aspect-square sm:aspect-video rounded-xl border border-border bg-card shadow-lg overflow-hidden">
                 <Image 
                   src="/haojun2.jpg" 
@@ -99,7 +99,7 @@ export default async function Home() {
 
             {/* About Me Content - Right Side */}
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <div>
+              <div className="order-1 lg:order-2">
               <h2 className="text-2xl font-bold">About Me</h2>
               <br/>
               <div className="space-y-4 text-primary">
@@ -135,7 +135,7 @@ export default async function Home() {
 
         {/* Work Experience */}
         <BlurFade delay={BLUR_FADE_DELAY * 5}>
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-6 flex min-h-0 flex-col gap-y-3 sm:gap-y-4">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
             <h2 className="text-xl sm:text-2xl font-bold">Work Experience</h2>
               {workExperience.map((work, id) => (
                 <BlurFade key={work.company} delay={BLUR_FADE_DELAY * (6 + id)}>
@@ -152,31 +152,12 @@ export default async function Home() {
               ))}
           </div>
         </BlurFade>
-          {/* Education */}
-          <BlurFade delay={BLUR_FADE_DELAY * 10}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 sm:py-6 flex min-h-0 flex-col gap-y-3 sm:gap-y-4">
-              <h2 className="text-xl sm:text-2xl font-bold">Education</h2>
-              {educationData.map((education, id) => (
-                <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
-                  <ResumeCard
-                    logoUrl={education.logoUrl || ""}
-                    altText={education.school}
-                    title={education.school}
-                    subtitle={education.degree}
-                    href={education.href}
-                    period={`${education.start} - ${education.end}`}
-                    description={education.description}
-                    isEducation={true}
-                  />
-                </BlurFade>
-              ))}
-            </div>
-          </BlurFade>
+
         {/* Tech Stack*/}
         <BlurFade delay={BLUR_FADE_DELAY * 15}>
-          <div className="space-y-4 sm:space-y-6 w-full py-4 sm:py-8 px-4 sm:px-6">
-            <div className="flex flex-col items-center justify-center space-y-3 sm:space-y-4 text-center">
-              <div className="space-y-2">
+          <div className="space-y-6 sm:space-y-8 w-full py-8 sm:py-12 px-4 sm:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 text-center">
+              <div className="space-y-3 sm:space-y-4">
                 <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">
                   Tech Stack I work with
                 </h2>
@@ -193,9 +174,9 @@ export default async function Home() {
 
           {/* Projects Teaser */}
           <BlurFade delay={BLUR_FADE_DELAY * 16}>
-            <div className="space-y-4 sm:space-y-6 w-full py-4 sm:py-8 px-4 sm:px-6">
-              <div className="flex flex-col items-center justify-center space-y-3 sm:space-y-4 text-center">
-                <div className="space-y-2">
+            <div className="space-y-6 sm:space-y-8 w-full py-8 sm:py-12 px-4 sm:px-6">
+              <div className="flex flex-col items-center justify-center space-y-4 sm:space-y-6 text-center">
+                <div className="space-y-3 sm:space-y-4">
                   <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">
                     Check out my latest projects
                   </h2>
@@ -206,7 +187,7 @@ export default async function Home() {
                   </p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto px-4">
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-[1200px] mx-auto px-4">
                 {projectData.map((project, id) => (
                   <BlurFade key={project.title} delay={BLUR_FADE_DELAY * (17 + id)}>
                     <ProjectCard
@@ -224,10 +205,30 @@ export default async function Home() {
               </div>
             </div>
           </BlurFade>
+          {/* Education */}
+          <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
+              <h2 className="text-xl sm:text-2xl font-bold">Education</h2>
+              {educationData.map((education, id) => (
+                <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
+                  <ResumeCard
+                    logoUrl={education.logoUrl || ""}
+                    altText={education.school}
+                    title={education.school}
+                    subtitle={education.degree}
+                    href={education.href}
+                    period={`${education.start} - ${education.end}`}
+                    description={education.description}
+                    isEducation={true}
+                  />
+                </BlurFade>
+              ))}
+            </div>
+          </BlurFade>
 
         {/* CTA */}
         <BlurFade delay={BLUR_FADE_DELAY * 20}>
-          <section className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+          <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 mb-16 sm:mb-20">
             <div className="bg-gradient-to-br from-primary/10 via-transparent to-secondary/10 border border-border rounded-2xl p-6 sm:p-8 lg:p-10 text-center">
               <h2 className="text-2xl sm:text-3xl font-bold">Let&apos;s build something great</h2>
               <p className="text-muted-foreground mt-2 text-sm sm:text-base">Available for freelance and full‑time roles</p>
