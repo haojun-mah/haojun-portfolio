@@ -109,10 +109,8 @@ export default async function Home() {
                   className="font-bold text-foreground">National University of
                   Singapore</span> with a passion for building impactful
                   technology. As a <span className="font-bold
-                  text-foreground">full-stack engineer</span> with a
-                  solution-oriented mindset, I enjoy creating tech solutions to
-                  everyday problems, especially <span className="font-semibold
-                  text-foreground">tech for good</span>.
+                  text-foreground">full-stack engineer</span>, I enjoy creating tech solutions to
+                  everyday problems.
                 </p>
                <p>
                   As an <span className="font-bold text-foreground">aspiring entrepreneur</span>, I&apos;m also excited about
@@ -152,6 +150,27 @@ export default async function Home() {
               ))}
           </div>
         </BlurFade>
+
+         {/* Education */}
+          <BlurFade delay={BLUR_FADE_DELAY * 10}>
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
+              <h2 className="text-xl sm:text-2xl font-bold">Education</h2>
+              {educationData.map((education, id) => (
+                <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
+                  <ResumeCard
+                    logoUrl={education.logoUrl || ""}
+                    altText={education.school}
+                    title={education.school}
+                    subtitle={education.degree}
+                    href={education.href}
+                    period={`${education.start} - ${education.end}`}
+                    description={education.description}
+                    isEducation={true}
+                  />
+                </BlurFade>
+              ))}
+            </div>
+          </BlurFade>
 
         {/* Tech Stack*/}
         <BlurFade delay={BLUR_FADE_DELAY * 15}>
@@ -205,26 +224,7 @@ export default async function Home() {
               </div>
             </div>
           </BlurFade>
-          {/* Education */}
-          <BlurFade delay={BLUR_FADE_DELAY * 10}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Education</h2>
-              {educationData.map((education, id) => (
-                <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
-                  <ResumeCard
-                    logoUrl={education.logoUrl || ""}
-                    altText={education.school}
-                    title={education.school}
-                    subtitle={education.degree}
-                    href={education.href}
-                    period={`${education.start} - ${education.end}`}
-                    description={education.description}
-                    isEducation={true}
-                  />
-                </BlurFade>
-              ))}
-            </div>
-          </BlurFade>
+         
 
         {/* CTA */}
         <BlurFade delay={BLUR_FADE_DELAY * 20}>

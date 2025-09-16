@@ -3,18 +3,57 @@ import { Icons } from "@/components/icons";
 // Work experience data
 export const workExperience = [
   {
+    company: "Developer Group @ NUS Computing",
+    title: "Software Engineer",
+    logoUrl: "/dgsc.png",
+    href: "https://example.com",
+    badges: ["React", "Node.js", "TypeScript"],
+    start: "Aug 2025",
+    end: "Present",
+    description: [
+      "Working with Caring For Life.",
+      "Building a full-stack application to streamline the processes in Caring For Life."
+    ] 
+  },
+  {
+    company: "NUS Fintech Society",
+    title: "Software Engineer",
+    logoUrl: "/nusfintech.png",
+    href: "https://example.com",
+    badges: ["React", "Node.js", "TypeScript"],
+    start: "Aug 2025",
+    end: "Present",
+    description: [
+      "Working with HeyMax",
+      "Building an AI itinerary planner with tools to build itinerary when given social media links and inputs."
+    ] 
+  },
+  {
+    company: "GroceryPicker",
+    title: "Founder",
+    logoUrl: "/grocerypicker.png",
+    href: "https://example.com",
+    start: "May 2025",
+    end: "Present",
+    description: [
+      "Grocery errands take alot of time and effort when trying to maximise cost savings moving between grocery stores and comparing items individually.",
+      "Created a mobile application with build in optimization for grocery list, letting users find the grocery store with the cheapest grocery for every item.",
+      "Received feedback and pivoted to targetting online grocery shopping.",
+      "Building a web application which builds grocery carts containing the cheapest grocery items from different online retailers and allowing them to purchase from different retailers with a click of a button."
+    ] 
+  },
+  {
     company: "TOPPAN Ecquaria",
     title: "Software Engineer Intern",
     logoUrl: "/toppanecquaria.jpg",
     href: "https://example.com",
-    badges: ["React", "Node.js", "TypeScript"],
     start: "May 2025",
     end: "Aug 2025",
     description: [
-      "Built and integrated RAG pipelines and AI agents into enterprise products used by 10+ companies, enhancing product capabilities and driving adoption of AI features in said products",
+      "Built and integrated RAG pipelines and AI agents into enterprise products used by 10+ companies, enhancing product capabilities and driving adoption of AI features in said products.",
       "Enhanced an AI lip dubbing system by leveraging open-source audio models such as Kokoro and the LatentSync lip-sync model, enabling multilingual AI video dubbing solutions.",
       "Refactored and modernized multiple web applications using React and FastAPI, improving UI performance, scalability, and production-readiness for deployment across the Toppan Next Group.",
-      "Conducted QA Testing for AI Team products and did research on AI trends and new AI technology",
+      "Conducted QA Testing for AI Team products and did research on AI trends and new AI technology.",
       "Enjoyed working in a team development environment and learnt plenty on software development from experienced colleagues."
     ] 
   },
