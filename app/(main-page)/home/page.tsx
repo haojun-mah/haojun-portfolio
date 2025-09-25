@@ -7,7 +7,9 @@ import { ProjectCard } from "@/components/project-card";
 import { TechStackSlider } from "@/components/TechStackSlider";
 import { Icons } from "@/components/icons";
 import { educationData, workExperience, projectData } from "@/lib/data";
-import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { FlipText } from "@/components/ui/flip-text";
+import { ShinyButton } from "@/components/ui/shiny-button";
 
 const BLUR_FADE_DELAY = 0.04;
 const currentHacking = "GrocerPicker Startup Validation";
@@ -24,117 +26,61 @@ export default async function Home() {
           <div aria-hidden className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
 
           <div className="max-w-7xl px-4 sm:px-6 mx-auto pt-16 sm:pt-20 pb-12 sm:pb-16">
-            <div className="grid lg:grid-cols-2 gap-8 sm:gap-12 items-start">
+            <div className="grid lg:grid-cols-2 items-center">
               {/* Hero Content - Left Side */}
-              <BlurFade delay={BLUR_FADE_DELAY * 1}>
-                <div>
-                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-                  Hi, I&apos;m <span className="text-primary">Hao Jun</span>
-                  <br />
-                  I love to <PointerHighlight rectangleClassName="bg-neutral-200 dark:bg-neutral-700 border-neutral-300 dark:border-neutral-600 leading-loose"
-                                              pointerClassName="text-yellow-500 h-3 w-3"
-                                              containerClassName="inline-block">
-                                                build
-                                             </PointerHighlight>.
-                </h1>
-                <p className="mt-4 sm:mt-5 text-base sm:text-lg text-muted-foreground max-w-prose">
-                  Full‑stack developer and aspiring entrepreneur.
-                  <br />
-                  Passionate about building solutions to everyday problems.
-                </p>
-                <div className="mt-8 flex flex-wrap gap-3">
-                  <Link href="https://www.linkedin.com/in/hao-jun-mah-7b22b7210" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition">
-                    <Icons.linkedin className="w-4 h-4" />
-                  </Link>
-                  <Link href="https://github.com/haojun-mah" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 border border-border rounded-md hover:bg-muted transition">
-                    <Icons.github className="w-4 h-4" />
-                  </Link>
-                  <Link href="/MAH HAO JUN RESUME.pdf" download="Haojun_Mah_Resume.pdf" className="flex items-center gap-2 px-5 py-2.5 border-4  border-border rounded-md hover:bg-muted transition">
-                    <Icons.download className="w-4 h-4" />
-                    Download Resume
-                  </Link>
-                </div>
+              <BlurFade delay={BLUR_FADE_DELAY * 2}>
+                <div className="space-y-4 sm:space-y-6 lg:pr-8">
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
+                    Hi, I&apos;m <span className="text-primary">Hao Jun</span><br />
+                    <div className="inline-block">
+                      <FlipText className="whitespace-nowrap text-blue-600 dark:text-blue-400">Full Stack Developer</FlipText>
+                    </div>
+                  </h1>
+                  <p className="text-base sm:text-xl text-muted-foreground max-w-prose">
+                    <span className="whitespace-nowrap"><span className="font-bold text-foreground">Aspiring Entrepreneur</span> who loves to solutions for everyday problems.</span>
+                    <br />
+                    <span className="whitespace-nowrap"><span className="font-bold text-foreground">Computer Science</span> @ National University of Singapore</span>
+                    <br  />
+                    <span className="whitespace-nowrap">Areas of Interests: <span className="font-bold text-foreground">Parallel Computing</span> and <span className="font-bold text-foreground">Artificial Intelligence</span></span>
+                  </p>
+                  <div className="flex flex-wrap gap-3">
+                    <Link href="https://www.linkedin.com/in/hao-jun-mah-7b22b7210" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition">
+                      <Icons.linkedin className="w-4 h-4" />
+                    </Link>
+                    <Link href="https://github.com/haojun-mah" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 border border-border rounded-md hover:bg-muted transition">
+                      <Icons.github className="w-4 h-4" />
+                    </Link>
+                    <Link href="/MAH HAO JUN RESUME.pdf" download="Haojun_Mah_Resume.pdf">
+                      <ShinyButton className="flex flex-row items-center justify-center gap-2 px-4 py-2">
+                        <Icons.download className="w-4 h-4 flex-shrink-0 order-1" />
+                        <span className="order-2">Download Resume</span>
+                      </ShinyButton>
+                    </Link>
+                 </div>
                 </div>
               </BlurFade>
-
+              
               {/* Hero Visual - Right Side */}
-              <BlurFade delay={BLUR_FADE_DELAY * 2}>
-                <div className="relative">
-                  <div className="aspect-square sm:aspect-video rounded-xl border border-border bg-card shadow-lg overflow-hidden">
-                    <Image 
+              <BlurFade delay={BLUR_FADE_DELAY * 1}>
+                <div className="relative flex justify-center lg:justify-end lg:pl-8">
+                  <Avatar className="size-48 sm:size-56 md:size-64 lg:size-72 border">
+                    <AvatarImage 
+                      alt="Haojun face" 
                       src="/haojunpic1.jpg" 
-                      alt="Hao Jun" 
-                      fill
-                      className="object-cover object-center rounded-xl" 
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      priority
+                      className="object-cover object-center"
                     />
-                  </div>
-                  <div className="absolute -bottom-4 -left-4 sm:-bottom-6 sm:-left-6 bg-card border border-border rounded-xl p-3 sm:p-4 shadow-md">
-                    <p className="text-xs sm:text-sm">Currently hacking on: <span className="font-medium">{currentHacking}</span></p>
-                  </div>
+                    <AvatarFallback>HJ</AvatarFallback>
+                  </Avatar>
                 </div>
               </BlurFade>
             </div>
           </div>
         </section>
 
-        {/* About Me Section */}
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-start">
-            {/* About Me Card - Left Side */}
-            <BlurFade delay={BLUR_FADE_DELAY * 3}>
-              <div className="relative order-2 lg:order-1">
-              <div className="aspect-square sm:aspect-video rounded-xl border border-border bg-card shadow-lg overflow-hidden">
-                <Image 
-                  src="/haojun2.jpg" 
-                  alt="About Me Visual" 
-                  fill
-                  className="object-cover object-center rounded-xl" 
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              </div>
-            </BlurFade>
-
-            {/* About Me Content - Right Side */}
-            <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <div className="order-1 lg:order-2">
-              <h2 className="text-2xl font-bold">About Me</h2>
-              <br/>
-              <div className="space-y-4 text-primary">
-                <p>
-                  I&apos;m a <span className="font-bold text-foreground">Year 2
-                  Computer Science</span> student at the <span
-                  className="font-bold text-foreground">National University of
-                  Singapore</span> with a passion for building impactful
-                  technology. As a <span className="font-bold
-                  text-foreground">full-stack engineer</span>, I enjoy creating tech solutions to
-                  everyday problems.
-                </p>
-               <p>
-                  As an <span className="font-bold text-foreground">aspiring entrepreneur</span>, I&apos;m also excited about
-                  entrepreneurial ventures and
-                  startups, where I can build productive products that positively
-                  benefit lives. My technical interests lie in <span className="font-bold text-foreground">agentic AI and
-                  hacking for good</span>.
-                </p>
-                  <p>
-                  In the past, I&apos;ve interned as a <span className="font-bold text-foreground">software engineer, taught
-                  programming lessons and taken on freelance software development
-                  projects.</span> I am looking for more opportunities to grow and
-                  interested in <span className="font-bold text-foreground">working for a start up</span>.
-                </p>
-              </div>
-              </div>
-            </BlurFade>
-          </div>
-        </section>
-
         {/* Work Experience */}
         <BlurFade delay={BLUR_FADE_DELAY * 5}>
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
-            <h2 className="text-xl sm:text-2xl font-bold">Work Experience</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">Work Experience</h2>
               {workExperience.map((work, id) => (
                 <BlurFade key={work.company} delay={BLUR_FADE_DELAY * (6 + id)}>
                   <ResumeCard
@@ -154,7 +100,7 @@ export default async function Home() {
          {/* Education */}
           <BlurFade delay={BLUR_FADE_DELAY * 10}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-4 sm:gap-y-6">
-              <h2 className="text-xl sm:text-2xl font-bold">Education</h2>
+              <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">Education</h2>
               {educationData.map((education, id) => (
                 <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
                   <ResumeCard
