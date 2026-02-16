@@ -1,18 +1,15 @@
 "use server";
 import Link from "next/link";
-import { PointerHighlight } from "@/components/ui/pointer-highlight";
-import { ResumeCard } from "@/components/resume-card";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
 import { TechStackSlider } from "@/components/TechStackSlider";
 import { Icons } from "@/components/icons";
 import { educationData, workExperience, projectData } from "@/lib/data";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { FlipText } from "@/components/ui/flip-text";
 import { ShinyButton } from "@/components/ui/shiny-button";
+import { ClientTweetCard } from "@/components/ui/tweet-card";
 
 const BLUR_FADE_DELAY = 0.04;
-const currentHacking = "GrocerPicker Startup Validation";
 
 
 
@@ -31,19 +28,14 @@ export default async function Home() {
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
                 <div className="space-y-4 sm:space-y-6 lg:pr-8">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
-                    Hi, I&apos;m <span className="text-primary">Hao Jun</span><br />
-                    <div className="inline-block">
-                      <FlipText className="whitespace-nowrap text-blue-600 dark:text-blue-400">Full Stack Developer</FlipText>
-                    </div>
+                    Hello! I&apos;m <span className="text-primary">Hao Jun</span><br />
                   </h1>
-                  <p className="text-base sm:text-xl text-muted-foreground max-w-prose">
-                    <span className="whitespace-nowrap"><span className="font-bold text-foreground">Aspiring Entrepreneur</span> who loves to solutions for everyday problems.</span>
-                    <br />
-                    <span className="whitespace-nowrap"><span className="font-bold text-foreground">Computer Science</span> @ National University of Singapore</span>
+                  <h3 className="text-base sm:text-xl text-muted-foreground max-w-prose">
+                    <span className="whitespace-nowrap font-bold text-foreground">Computer Science @ National University of Singapore</span>
                     <br  />
                     <span className="whitespace-nowrap">Areas of Interests: <span className="font-bold text-foreground">Parallel Computing</span> and <span className="font-bold text-foreground">Artificial Intelligence</span></span>
-                  </p>
-                  <div className="flex flex-wrap gap-3">
+                  </h3>
+                  <div className="flex flex-wrap gap-3 mt-10">
                     <Link href="https://www.linkedin.com/in/hao-jun-mah-7b22b7210" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition">
                       <Icons.linkedin className="w-4 h-4" />
                     </Link>
@@ -51,9 +43,11 @@ export default async function Home() {
                       <Icons.github className="w-4 h-4" />
                     </Link>
                     <Link href="/MAH HAO JUN RESUME.pdf" download="Haojun_Mah_Resume.pdf">
-                      <ShinyButton className="flex flex-row items-center justify-center gap-2 px-4 py-2">
-                        <Icons.download className="w-4 h-4 flex-shrink-0 order-1" />
-                        <span className="order-2">Download Resume</span>
+                      <ShinyButton className="px-4 py-2">
+                        <div className="flex items-center gap-2">
+                          <Icons.download className="w-4 h-8 flex-shrink-0" />
+                          <span>Download Resume</span>
+                        </div>
                       </ShinyButton>
                     </Link>
                  </div>
@@ -83,14 +77,21 @@ export default async function Home() {
             <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">Work Experience</h2>
               {workExperience.map((work, id) => (
                 <BlurFade key={work.company} delay={BLUR_FADE_DELAY * (6 + id)}>
-                  <ResumeCard
-                    logoUrl={work.logoUrl || ""}
-                    altText={work.company}
-                    title={work.company}
+                  <ClientTweetCard
+                    name={work.company}
                     subtitle={work.title}
-                    href={work.href}
                     period={`${work.start} - ${work.end ?? "Present"}`}
-                    description={work.description}
+                    avatarUrl={work.logoUrl || ""}
+                    description={
+                      <div className="space-y-2 mt-2">
+                        {work.description.map((desc, i) => (
+                           <div key={i} className="flex gap-2 items-start">
+                             <div className="mt-2 shrink-0 bg-primary h-1.5 w-1.5 rounded-full" />
+                             <span className="text-foreground/80">{desc}</span>
+                          </div>
+                        ))}
+                      </div>
+                    }
                   />
                 </BlurFade>
               ))}
@@ -103,15 +104,18 @@ export default async function Home() {
               <h2 className="text-2xl sm:text-3xl font-bold tracking-tighter lg:text-4xl xl:text-5xl">Education</h2>
               {educationData.map((education, id) => (
                 <BlurFade key={education.school} delay={BLUR_FADE_DELAY * (11 + id)}>
-                  <ResumeCard
-                    logoUrl={education.logoUrl || ""}
-                    altText={education.school}
-                    title={education.school}
-                    subtitle={education.degree}
-                    href={education.href}
-                    period={`${education.start} - ${education.end}`}
-                    description={education.description}
-                    isEducation={true}
+                  <ClientTweetCard
+                     name={education.school}
+                     subtitle={education.degree}
+                     period={`${education.start} - ${education.end}`}
+                     avatarUrl={education.logoUrl || ""}
+                     description={
+                        <div className="space-y-1 mt-2">
+                          {education.description.map((desc, i) => (
+                            <p key={i} className="text-foreground/80 font-medium">{desc}</p>
+                          ))}
+                        </div>
+                     }
                   />
                 </BlurFade>
               ))}

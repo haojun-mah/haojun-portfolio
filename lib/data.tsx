@@ -3,45 +3,59 @@ import { Icons } from "@/components/icons";
 // Work experience data
 export const workExperience = [
   {
-    company: "Developer Group @ NUS Computing",
-    title: "Software Engineer",
-    logoUrl: "/dgsc.png",
+    company: "Fly Fairly",
+    title: "Product Manager Intern",
+    logoUrl: "/flyfairly.png",
     href: "https://example.com",
     badges: ["React", "Node.js", "TypeScript"],
-    start: "Aug 2025",
-    end: "Present",
+    start: "Jan 2026",
+    end: "April 2026",
     description: [
-      "Working with Caring For Life.",
-      "Building a full-stack application to streamline the processes in Caring For Life."
+      "Product Manager Intern at Fly Fairly, conducted product research and stakeholder interviews to identify problems in the processes.",
+      "Developed prototypes of potential solutions and conducted feedback testing.",
+      "Wrote product requirement documents and functional specifications for the development team to implement solutions.",
     ] 
   },
-  {
-    company: "NUS Fintech Society",
-    title: "Software Engineer",
-    logoUrl: "/nusfintech.png",
-    href: "https://example.com",
-    badges: ["React", "Node.js", "TypeScript"],
-    start: "Aug 2025",
-    end: "Present",
-    description: [
-      "Working with HeyMax",
-      "Building an AI itinerary planner with tools to build itinerary when given social media links and inputs."
-    ] 
-  },
-  {
-    company: "GroceryPicker",
-    title: "Founder",
-    logoUrl: "/grocerypicker.png",
-    href: "https://example.com",
-    start: "May 2025",
-    end: "Present",
-    description: [
-      "Grocery errands take alot of time and effort when trying to maximise cost savings moving between grocery stores and comparing items individually.",
-      "Created a mobile application with build in optimization for grocery list, letting users find the grocery store with the cheapest grocery for every item.",
-      "Received feedback and pivoted to targetting online grocery shopping.",
-      "Building a web application which builds grocery carts containing the cheapest grocery items from different online retailers and allowing them to purchase from different retailers with a click of a button."
-    ] 
-  },
+  // {
+  //   company: "Developer Group @ NUS Computing",
+  //   title: "Software Engineer",
+  //   logoUrl: "/dgsc.png",
+  //   href: "https://example.com",
+  //   badges: ["React", "Node.js", "TypeScript"],
+  //   start: "Aug 2025",
+  //   end: "Present",
+  //   description: [
+  //     "Working with Caring For Life.",
+  //     "Building a full-stack application to streamline the processes in Caring For Life."
+  //   ] 
+  // },
+  // {
+  //   company: "NUS Fintech Society",
+  //   title: "Software Engineer",
+  //   logoUrl: "/nusfintech.png",
+  //   href: "https://example.com",
+  //   badges: ["React", "Node.js", "TypeScript"],
+  //   start: "Aug 2025",
+  //   end: "Present",
+  //   description: [
+  //     "Working with HeyMax",
+  //     "Building an AI itinerary planner with tools to build itinerary when given social media links and inputs."
+  //   ] 
+  // },
+  // {
+  //   company: "GroceryPicker",
+  //   title: "Founder",
+  //   logoUrl: "/grocerypicker.png",
+  //   href: "https://example.com",
+  //   start: "May 2025",
+  //   end: "Present",
+  //   description: [
+  //     "Grocery errands take alot of time and effort when trying to maximise cost savings moving between grocery stores and comparing items individually.",
+  //     "Created a mobile application with build in optimization for grocery list, letting users find the grocery store with the cheapest grocery for every item.",
+  //     "Received feedback and pivoted to targetting online grocery shopping.",
+  //     "Building a web application which builds grocery carts containing the cheapest grocery items from different online retailers and allowing them to purchase from different retailers with a click of a button."
+  //   ] 
+  // },
   {
     company: "TOPPAN Ecquaria",
     title: "Software Engineer Intern",
@@ -69,20 +83,20 @@ export const workExperience = [
       "Reaffirmed my passion for tech-for-good and found meaning in inspiring the next generation of builders and thinkers."
     ]
   },
-  {
-    company: "Millenium Timepieces",
-    title: "Freelance Software Developer",
-    logoUrl: "/milleniumtimepieces.jpg",
-    badges: ["Next.js", "Prisma", "MongoDB"],
-    start: "Feb 2024",
-    end: "Jun 2024",
-    description: [
-      "Commissioned to build an inventory tracker for watches; Inventory tracker is used to handle 50+ transactions.",
-      "Developed tracker with React, Node.js, PostgreSQL and hosted on Vercel.",
-      "Wrote functional specification of inventory tracker with founder.",
-      "Really enjoyed the high-octane work of discussing product outcomes, receiving user feedback and improving on it and even negotiating payment. This blossomed my passion "
-    ]
-  },
+  // {
+  //   company: "Millenium Timepieces",
+  //   title: "Freelance Software Developer",
+  //   logoUrl: "/milleniumtimepieces.jpg",
+  //   badges: ["Next.js", "Prisma", "MongoDB"],
+  //   start: "Feb 2024",
+  //   end: "Jun 2024",
+  //   description: [
+  //     "Commissioned to build an inventory tracker for watches; Inventory tracker is used to handle 50+ transactions.",
+  //     "Developed tracker with React, Node.js, PostgreSQL and hosted on Vercel.",
+  //     "Wrote functional specification of inventory tracker with founder.",
+  //     "Really enjoyed the high-octane work of discussing product outcomes, receiving user feedback and improving on it and even negotiating payment. This blossomed my passion "
+  //   ]
+  // },
   {
     company: "Singapore Armed Forces",
     title: "Deputy Staffer 4 Officer, 21 Singapore Artillery",
@@ -97,20 +111,20 @@ export const workExperience = [
       "Genuinely one of the most fun and meaningful moments of my life. Enjoyed meeting people from different walks of life serving the same mission. Really reignited the patriotism in me."
     ]
   },
-  {
-    company: "Central Provident Fund",
-    title: "Customer Service Executive",
-    logoUrl: "/CPF.png",
-    badges: ["Next.js", "Prisma", "MongoDB"],
-    start: "Dec 2021",
-    end: "Feb 2022",
-    description: [
-      "Handled calls and queries from 30+ customers daily. Mainly through calls and write-in.",
-      "Specialised in Silver Support Scheme and policies involving the elderly. Helped customers manage their savings and obtain financial help.",
-      "Enjoyed making a positive impact to many. This sparked my passion for building products for good.",
-      "Learnt how to communicate clearly and effectively and had a knack for convincing and selling to people."
-    ]
-  },
+  // {
+  //   company: "Central Provident Fund",
+  //   title: "Customer Service Executive",
+  //   logoUrl: "/CPF.png",
+  //   badges: ["Next.js", "Prisma", "MongoDB"],
+  //   start: "Dec 2021",
+  //   end: "Feb 2022",
+  //   description: [
+  //     "Handled calls and queries from 30+ customers daily. Mainly through calls and write-in.",
+  //     "Specialised in Silver Support Scheme and policies involving the elderly. Helped customers manage their savings and obtain financial help.",
+  //     "Enjoyed making a positive impact to many. This sparked my passion for building products for good.",
+  //     "Learnt how to communicate clearly and effectively and had a knack for convincing and selling to people."
+  //   ]
+  // },
 ];
 
 export const projectData = [  
