@@ -113,7 +113,7 @@ export default async function BlogList() {
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-4">Blog</h1>
             <p className="text-muted-foreground text-lg">
-              Hao Jun's Ramblings and Thoughts
+              Hao Jun&apos;s Ramblings and Thoughts
             </p>
           </div>
         </div>
