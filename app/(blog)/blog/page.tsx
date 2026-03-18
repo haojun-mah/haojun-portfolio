@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { BlogData } from "./create/types";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/lib/prisma";
 import { Metadata } from "next";
 
 // Enable caching for better performance
@@ -11,10 +11,10 @@ export const revalidate = 30; // Revalidate every 30 seconds
 // Add metadata for better SEO
 export const metadata: Metadata = {
   title: "Blog - Hao Jun's Portfolio",
-  description: "Thoughts, tutorials, and insights about web development and technology",
+  description: "The writing and thoughts of Hao Jun",
   openGraph: {
     title: "Blog - Hao Jun's Portfolio",
-    description: "Thoughts, tutorials, and insights about web development and technology",
+    description: "The writing and thoughts of Hao Jun",
     type: "website",
   },
 };
@@ -22,15 +22,6 @@ export const metadata: Metadata = {
 interface BlogListItem extends BlogData {
   id: string;
 }
-
-// Create a singleton Prisma client for better performance
-const globalForPrisma = globalThis as unknown as {
-  prisma: PrismaClient | undefined;
-};
-
-const prisma = globalForPrisma.prisma ?? new PrismaClient();
-
-if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
 
 // Server component - no useState, useEffect needed
 export default async function BlogList() {
@@ -57,8 +48,7 @@ export default async function BlogList() {
       // take: 20,
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    blogs = blogData.map((blog: any) => ({
+    blogs = blogData.map((blog) => ({
       id: blog.id,
       title: blog.title,
       author: blog.author,
@@ -66,30 +56,31 @@ export default async function BlogList() {
       readTime: blog.readTime,
       tags: blog.tags,
       featuredImage: blog.featuredImage,
-      content: blog.content as any[] // eslint-disable-line @typescript-eslint/no-explicit-any
+      content: blog.content
     }));
   } catch (err) {
     console.error('Error fetching blogs:', err);
     error = 'Failed to load blogs. Please try again later.';
-  } finally {
-    // Don't disconnect in serverless environments
-    if (process.env.NODE_ENV !== 'production') {
-      await prisma.$disconnect();
-    }
   }
 
-  const getExcerpt = (content: any[]): string => { // eslint-disable-line @typescript-eslint/no-explicit-any
-    if (!content || !Array.isArray(content)) return 'No preview available...';
+  const getExcerpt = (content: string): string => {
+    if (!content) return 'No preview available...';
     
-    const firstParagraph = content.find(block => 
-      block?.type === 'paragraph' && block?.text
-    );
-    if (firstParagraph?.text) {
-      return firstParagraph.text.length > 150 
-        ? firstParagraph.text.substring(0, 150) + '...'
-        : firstParagraph.text;
-    }
-    return 'No preview available...';
+    // Simple basic text extraction from markdown string
+    // remove markdown image links
+    let plainText = content.replace(/!\[.*?\]\(.*?\)/g, '');
+    // remove standard links
+    plainText = plainText.replace(/\[(.*?)\]\(.*?\)/g, '$1');
+    // remove markdown headers
+    plainText = plainText.replace(/#+\s/g, '');
+    // remove bold/italic
+    plainText = plainText.replace(/(\*|_)/g, '');
+    
+    plainText = plainText.trim();
+
+    return plainText.length > 150 
+        ? plainText.substring(0, 150) + '...'
+        : plainText || 'No preview available...';
   };
 
   const formatDate = (dateString: string): string => {
@@ -122,7 +113,7 @@ export default async function BlogList() {
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-4">Blog</h1>
             <p className="text-muted-foreground text-lg">
-              Thoughts, tutorials, and insights about web development
+              Hao Jun's Ramblings and Thoughts
             </p>
           </div>
         </div>
@@ -137,12 +128,6 @@ export default async function BlogList() {
       {/* Blog Grid */}
       {blogs.length === 0 ? (
         <div className="text-center py-12">
-          <div className="bg-muted rounded-lg p-8">
-            <h3 className="text-xl font-semibold text-foreground mb-2">No blogs yet</h3>
-            <p className="text-muted-foreground">
-              Check back later for new content.
-            </p>
-          </div>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -193,7 +178,7 @@ export default async function BlogList() {
                 </h2>
 
                 {/* Excerpt */}
-                <p className="text-muted-foreground text-sm leading-relaxed mb-4">
+                <p className="text-muted-foreground text-sm leading-relaxed mb-4 whitespace-pre-wrap">
                   {getExcerpt(blog.content)}
                 </p>
 

@@ -1,7 +1,9 @@
 import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "@/app/lib/prisma";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 // Enable static generation and caching
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -9,31 +11,19 @@ export const dynamicParams = true; // Allow new dynamic routes
 
 // Generate static params for existing blogs
 export async function generateStaticParams() {
-  const prisma = new PrismaClient();
-  
   try {
     const blogs = await prisma.blog.findMany({
       select: { id: true },
       take: 10 // Limit to most recent 10 blogs for build time
     });
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return blogs.map((blog: any) => ({
+    return blogs.map((blog) => ({
       id: blog.id,
     }));
   } catch (error) {
     console.error('Error generating static params:', error);
     return [];
   }
-}
-
-export interface ContentBlock {
-  type: string;
-  text?: string;
-  level?: number;
-  src?: string;
-  alt?: string;
-  caption?: string;
 }
 
 export interface BlogData {
@@ -44,10 +34,8 @@ export interface BlogData {
   readTime: string;
   tags: string[];
   featuredImage: string;
-  content: Array<ContentBlock>;
+  content: string;
 }
-
-const prisma = new PrismaClient();
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
@@ -97,14 +85,14 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
     }
 
     blog = {
-      id: blogData!.id,
-      title: blogData!.title,
-      author: blogData!.author,
-      publishedAt: blogData!.publishedAt.toISOString(),
-      readTime: blogData!.readTime,
-      tags: blogData!.tags,
-      featuredImage: blogData!.featuredImage,
-      content: blogData!.content as unknown as ContentBlock[]
+      id: blogData.id,
+      title: blogData.title,
+      author: blogData.author,
+      publishedAt: blogData.publishedAt.toISOString(),
+      readTime: blogData.readTime,
+      tags: blogData.tags,
+      featuredImage: blogData.featuredImage,
+      content: blogData.content
     };
   } catch (error) {
     console.error('Error fetching blog:', error);
@@ -117,68 +105,6 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
       month: 'long',
       day: 'numeric'
     });
-  };
-
-  const renderContentBlock = (block: ContentBlock, index: number) => {
-    switch (block.type) {
-      case 'paragraph':
-        return (
-          <p key={index} className="text-foreground leading-relaxed mb-6">
-            {block.text}
-          </p>
-        );
-      
-      case 'heading1':
-        return (
-          <h1 key={index} className="text-4xl font-bold text-foreground mb-6 mt-8">
-            {block.text}
-          </h1>
-        );
-      
-      case 'heading2':
-        return (
-          <h2 key={index} className="text-3xl font-bold text-foreground mb-4 mt-8">
-            {block.text}
-          </h2>
-        );
-      
-      case 'heading3':
-        return (
-          <h3 key={index} className="text-2xl font-bold text-foreground mb-4 mt-6">
-            {block.text}
-          </h3>
-        );
-      
-      case 'heading4':
-        return (
-          <h4 key={index} className="text-xl font-bold text-foreground mb-3 mt-6">
-            {block.text}
-          </h4>
-        );
-      
-      case 'image':
-        return (
-          <div key={index} className="my-8">
-            {block.src && (
-              <div className="space-y-3">
-                <img
-                  src={block.src}
-                  alt={block.alt || ''}
-                  className="w-full rounded-lg shadow-lg"
-                />
-                {block.caption && (
-                  <p className="text-sm text-muted-foreground italic text-center">
-                    {block.caption}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-        );
-      
-      default:
-        return null;
-    }
   };
 
   if (!blog) {
@@ -248,9 +174,11 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
       </header>
 
       {/* Content */}
-      <div className="prose prose-lg max-w-none">
-        {blog.content && blog.content.length > 0 ? (
-          blog.content.map((block, index) => renderContentBlock(block, index))
+      <div className="prose prose-lg dark:prose-invert max-w-none">
+        {blog.content ? (
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+            {blog.content}
+          </ReactMarkdown>
         ) : (
           <p className="text-muted-foreground italic">No content available for this blog post.</p>
         )}

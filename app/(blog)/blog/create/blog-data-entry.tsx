@@ -1,560 +1,321 @@
 "use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { BlogData, ContentBlock } from './types'
-import {
-  QueryClient,
-  QueryClientProvider,
-} from '@tanstack/react-query'
-
-const queryClient = new QueryClient()
+import { useState, useRef, ChangeEvent, DragEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import { BlogData } from './types';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export default function CreateBlogForm() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  const [featuredImageFile, setFeaturedImageFile] = useState<File | null>(null)
-  const [contentImageFiles, setContentImageFiles] = useState<{[key: number]: File}>({})
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const [featuredImageFile, setFeaturedImageFile] = useState<File | null>(null);
+  
   const [formData, setFormData] = useState<BlogData>({
     title: '',
-    author: '',
+    author: 'Hao Jun',
     publishedAt: new Date().toISOString().split('T')[0],
     readTime: '',
     tags: [],
     featuredImage: '',
-    content: []
-  })
+    content: ''
+  });
 
-  const [newTag, setNewTag] = useState('')
+  const [newTag, setNewTag] = useState('');
 
-  const handleFeaturedImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (!file) return
+  const handleDragOver = (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
 
-    setFeaturedImageFile(file)
-    // Create a preview URL for the image
-    const previewUrl = URL.createObjectURL(file)
-    setFormData(prev => ({ ...prev, featuredImage: previewUrl }))
-  }
-
-  const handleContentImageUpload = (e: React.ChangeEvent<HTMLInputElement>, index: number) => {
-    const file = e.target.files?.[0]
-    if (!file) return
-
-    setContentImageFiles(prev => ({ ...prev, [index]: file }))
-    // Create a preview URL for the image
-    const previewUrl = URL.createObjectURL(file)
-    updateContentBlock(index, { src: previewUrl })
-  }
-
-  const addTag = () => {
-    if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-      setFormData(prev => ({
-        ...prev,
-        tags: [...prev.tags, newTag.trim()]
-      }))
-      setNewTag('')
-    }
-  }
-
-  const removeTag = (tagToRemove: string) => {
-    setFormData(prev => ({
-      ...prev,
-      tags: prev.tags.filter(tag => tag !== tagToRemove)
-    }))
-  }
-
-  const addContentBlock = (type: string) => {
-    const newBlock = {
-      type,
-      ...(type === 'paragraph' && { text: '' }),
-      ...(type.startsWith('heading') && { text: '', level: parseInt(type.slice(-1)) }),
-      ...(type === 'image' && { src: '', alt: '', caption: '' })
-    }
+  const handleDrop = async (e: DragEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
     
-    setFormData(prev => ({
-      ...prev,
-      content: [...prev.content, newBlock]
-    }))
-  }
+    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+      const file = e.dataTransfer.files[0];
+      if (file.type.startsWith('image/')) {
+        await uploadImageToMarkdown(file);
+      }
+    }
+  };
 
-  const updateContentBlock = (index: number, updates: Partial<ContentBlock>) => {
-    setFormData(prev => ({
-      ...prev,
-      content: prev.content.map((block, i) => 
-        i === index ? { ...block, ...updates } : block
-      )
-    }))
-  }
-
-  const removeContentBlock = (index: number) => {
-    setFormData(prev => ({
-      ...prev,
-      content: prev.content.filter((_, i) => i !== index)
-    }))
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-    setError('')
-
+  const uploadImageToMarkdown = async (file: File) => {
+    if (!textareaRef.current) return;
+    
+    const textarea = textareaRef.current;
+    const startPos = textarea.selectionStart;
+    const endPos = textarea.selectionEnd;
+    
+    const placeholder = `![Uploading ${file.name}...]()\n`;
+    
+    const newContent = 
+      formData.content.substring(0, startPos) +
+      placeholder +
+      formData.content.substring(endPos);
+      
+    setFormData(prev => ({ ...prev, content: newContent }));
+    
     try {
-      // Create FormData for multipart upload
-      const submitFormData = new FormData()
+      const formDataUpload = new FormData();
+      formDataUpload.append('file', file);
       
-      // Add blog data as JSON string
-      submitFormData.append('blogData', JSON.stringify(formData))
+      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
+        method: 'POST',
+        body: file, // sending file directly to vercel blob per doc approach
+      });
       
-      // Add featured image file if exists
-      if (featuredImageFile) {
-        submitFormData.append('featuredImage', featuredImageFile)
+      if (!response.ok) {
+        throw new Error('Upload failed');
       }
       
-      // Add content image files
-      formData.content.forEach((block, index) => {
-        if (block.type === 'image' && contentImageFiles[index]) {
-          submitFormData.append(`contentImage_${index}`, contentImageFiles[index])
-        }
-      })
+      const data = await response.json();
+      
+      setFormData(prev => ({
+        ...prev,
+        content: prev.content.replace(placeholder, `![${file.name}](${data.url})\n`)
+      }));
+    } catch (err) {
+      setFormData(prev => ({
+        ...prev,
+        content: prev.content.replace(placeholder, `![Failed to upload ${file.name}]()\n`)
+      }));
+      console.error(err);
+      alert('Failed to upload image');
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    setSuccess('');
+
+    try {
+      // Validate
+      if (!formData.title.trim()) throw new Error('Title is required');
+      if (!formData.content.trim()) throw new Error('Content is required');
+      
+      let finalFeaturedImageUrl = formData.featuredImage;
+      if (featuredImageFile) {
+        const uploadRes = await fetch(`/api/upload?filename=${encodeURIComponent(featuredImageFile.name)}`, {
+          method: 'POST',
+          body: featuredImageFile
+        });
+        if (!uploadRes.ok) throw new Error('Featured image upload failed');
+        const uploadData = await uploadRes.json();
+        finalFeaturedImageUrl = uploadData.url;
+      }
+
+      const submitData = new FormData();
+      submitData.append('blogData', JSON.stringify({...formData, featuredImage: finalFeaturedImageUrl}));
 
       const response = await fetch('/api/blogs', {
         method: 'POST',
-        body: submitFormData, // No Content-Type header - let browser set it for multipart
-      })
+        body: submitData,
+      });
+
+      const result = await response.json();
 
       if (!response.ok) {
-        const errorData = await response.json()
-        throw new Error(errorData.error || 'Failed to create blog')
+        throw new Error(result.error || 'Failed to create blog');
       }
 
-      const result = await response.json()
-      console.log('Blog created successfully:', result)
-      
-      // Clean up object URLs
-      if (formData.featuredImage.startsWith('blob:')) {
-        URL.revokeObjectURL(formData.featuredImage)
-      }
-      formData.content.forEach(block => {
-        if (block.type === 'image' && block.src?.startsWith('blob:')) {
-          URL.revokeObjectURL(block.src)
-        }
-      })
-      
-      router.push('/blog')
-      
-    } catch (error) {
-      console.error('Error submitting blog:', error)
-      setError(error instanceof Error ? error.message : 'Failed to create blog')
+      setSuccess('Blog created successfully!');
+      setTimeout(() => {
+        router.push('/blog');
+        router.refresh();
+      }, 1500);
+
+    } catch (err) {
+      const error = err as Error;
+      setError(error.message || 'An error occurred');
+      console.error(error);
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
-    <div className="max-w-7xl mx-auto px-6 pb-12 mt-0">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 pt-6">
-        {/* Form Section */}
-        <div className="bg-card rounded-lg shadow-lg p-6">
-          <h2 className="text-xl font-semibold text-foreground mb-4">Blog Details</h2>
-          <QueryClientProvider client={queryClient}>
-          <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Basic Information */}
-            <div className="space-y-4">
+    <div className="max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 space-y-8">
+      {error && (
+        <div className="bg-destructive/15 text-destructive p-4 rounded-md border border-destructive/20 font-medium">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="bg-primary/20 text-primary p-4 rounded-md border border-primary/30 font-medium">
+          {success}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="space-y-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="lg:col-span-1 space-y-6">
+            <div className="bg-card p-6 rounded-lg border shadow-sm space-y-4">
+              <h2 className="text-xl font-semibold mb-4">Meta Info</h2>
+              
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Title *
-                </label>
+                <label className="block text-sm font-medium mb-1">Title</label>
                 <input
                   type="text"
-                  required
                   value={formData.title}
-                  onChange={(e) => setFormData(prev => ({ ...prev, title: e.target.value }))}
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  placeholder="Enter blog title"
+                  onChange={e => setFormData({ ...formData, title: e.target.value })}
+                  className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium mb-1">Author</label>
+                <input
+                  type="text"
+                  value={formData.author}
+                  onChange={e => setFormData({ ...formData, author: e.target.value })}
+                  className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  required
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Author *
-                  </label>
+                  <label className="block text-sm font-medium mb-1">Date</label>
                   <input
-                    type="text"
+                    type="date"
+                    value={formData.publishedAt}
+                    onChange={e => setFormData({ ...formData, publishedAt: e.target.value })}
+                    className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     required
-                    value={formData.author}
-                    onChange={(e) => setFormData(prev => ({ ...prev, author: e.target.value }))}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-foreground mb-2">
-                    Read Time
-                  </label>
+                  <label className="block text-sm font-medium mb-1">Read Time</label>
                   <input
                     type="text"
                     value={formData.readTime}
-                    onChange={(e) => setFormData(prev => ({ ...prev, readTime: e.target.value }))}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                    placeholder="5 minutes"
+                    onChange={e => setFormData({ ...formData, readTime: e.target.value })}
+                    placeholder="e.g. 5 min read"
+                    className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Featured Image
-                </label>
-                <div className="space-y-2">
+                <label className="block text-sm font-medium mb-1">Tags</label>
+                <div className="flex gap-2">
                   <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleFeaturedImageUpload}
-                    className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/80"
+                    type="text"
+                    value={newTag}
+                    onChange={e => setNewTag(e.target.value)}
+                    onKeyDown={e => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault();
+                        if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
+                          setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
+                          setNewTag('');
+                        }
+                      }
+                    }}
+                    placeholder="Press enter to add"
+                    className="flex-1 rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  {formData.featuredImage && (
-                    <div className="relative">
-                      <img
-                        src={formData.featuredImage}
-                        alt="Featured preview"
-                        className="w-full h-32 object-cover rounded-md"
-                      />
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
+                        setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
+                        setNewTag('');
+                      }
+                    }}
+                    className="px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium"
+                  >
+                    Add
+                  </button>
+                </div>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {formData.tags.map(tag => (
+                    <span key={tag} className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md text-xs">
+                      {tag}
                       <button
                         type="button"
-                        onClick={() => {
-                          if (formData.featuredImage.startsWith('blob:')) {
-                            URL.revokeObjectURL(formData.featuredImage)
-                          }
-                          setFormData(prev => ({ ...prev, featuredImage: '' }))
-                          setFeaturedImageFile(null)
-                        }}
-                        className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-destructive/80"
+                        onClick={() => setFormData({ ...formData, tags: formData.tags.filter(t => t !== tag) })}
+                        className="hover:text-destructive"
                       >
                         ×
                       </button>
-                    </div>
-                  )}
+                    </span>
+                  ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  Publish Date
-                </label>
+                <label className="block text-sm font-medium mb-1">Featured Image</label>
                 <input
-                  type="date"
-                  value={formData.publishedAt}
-                  onChange={(e) => setFormData(prev => ({ ...prev, publishedAt: e.target.value }))}
-                  className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+                  type="file"
+                  accept="image/*"
+                  onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const file = e.target.files?.[0];
+                    if (file) setFeaturedImageFile(file);
+                  }}
+                  className="w-full text-sm file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
                 />
               </div>
-            </div>
 
-            {/* Tags Section */}
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Tags
-              </label>
-              <div className="flex gap-2 mb-2">
-                <input
-                  type="text"
-                  value={newTag}
-                  onChange={(e) => setNewTag(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTag())}
-                  className="flex-1 px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                  placeholder="Add a tag"
+              <div className="pt-4 border-t">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className={`w-full py-3 px-4 rounded-md font-medium text-primary-foreground transition-colors ${
+                    loading ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'
+                  }`}
+                >
+                  {loading ? 'Publishing...' : 'Publish Blog Post'}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className="lg:col-span-2 bg-card border rounded-lg shadow-sm flex flex-col h-[800px] overflow-hidden">
+            <div className="grid grid-cols-2 h-full divide-x">
+              {/* Editor */}
+              <div className="flex flex-col h-full">
+                <div className="p-3 border-b bg-muted/50 font-medium text-sm flex justify-between items-center">
+                  <span>Markdown Editor</span>
+                  <span className="text-xs text-muted-foreground font-normal">Drop images here</span>
+                </div>
+                <textarea
+                  ref={textareaRef}
+                  value={formData.content}
+                  onChange={e => setFormData({ ...formData, content: e.target.value })}
+                  onDragOver={handleDragOver}
+                  onDrop={handleDrop}
+                  placeholder="Start writing using Markdown... Drop images here to upload!"
+                  className="w-full flex-1 resize-none bg-background p-4 outline-none focus:outline-none font-mono text-sm leading-relaxed"
+                  spellCheck="false"
                 />
-                <button
-                  type="button"
-                  onClick={addTag}
-                  className="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/80 transition-colors"
-                >
-                  Add
-                </button>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {formData.tags.map((tag, index) => (
-                  <span
-                    key={index}
-                    className="inline-flex items-center gap-1 px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm"
-                  >
-                    {tag}
-                    <button
-                      type="button"
-                      onClick={() => removeTag(tag)}
-                      className="ml-1 text-muted-foreground hover:text-foreground"
-                    >
-                      ×
-                    </button>
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            {/* Content Builder */}
-            <div>
-              <label className="block text-sm font-medium text-foreground mb-2">
-                Content
-              </label>
-              <div className="space-y-3">
-                {formData.content.map((block, index) => (
-                  <div key={index} className="p-4 border border-border rounded-lg bg-muted/50">
-                    <div className="flex justify-between items-center mb-2">
-                      <span className="text-sm font-medium text-foreground capitalize">
-                        {block.type === 'heading1' ? 'Heading 1' :
-                         block.type === 'heading2' ? 'Heading 2' :
-                         block.type === 'heading3' ? 'Heading 3' :
-                         block.type === 'heading4' ? 'Heading 4' :
-                         block.type}
-                      </span>
-                      <button
-                        type="button"
-                        onClick={() => removeContentBlock(index)}
-                        className="text-destructive hover:text-destructive/80"
-                      >
-                        Remove
-                      </button>
-                    </div>
-                    
-                    {(block.type === 'paragraph' || block.type.startsWith('heading')) && (
-                      <textarea
-                        value={block.text || ''}
-                        onChange={(e) => updateContentBlock(index, { text: e.target.value })}
-                        className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                        rows={block.type === 'paragraph' ? 3 : 2}
-                        placeholder={`Enter ${block.type} text`}
-                      />
-                    )}
-                    
-                    {block.type === 'image' && (
-                      <div className="space-y-2">
-                        <div>
-                          <label className="block text-sm font-medium text-foreground mb-1">
-                            Upload Image
-                          </label>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => handleContentImageUpload(e, index)}
-                            className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring file:mr-4 file:py-1 file:px-3 file:rounded file:border-0 file:text-sm file:bg-secondary file:text-secondary-foreground"
-                          />
-                        </div>
-                        {block.src && (
-                          <div className="relative">
-                            <img
-                              src={block.src}
-                              alt={block.alt || 'Content image'}
-                              className="w-full h-32 object-cover rounded-md"
-                            />
-                            <button
-                              type="button"
-                              onClick={() => {
-                                const block = formData.content[index]
-                                if (block.src?.startsWith('blob:')) {
-                                  URL.revokeObjectURL(block.src)
-                                }
-                                updateContentBlock(index, { src: '' })
-                                setContentImageFiles(prev => {
-                                  const updated = { ...prev }
-                                  delete updated[index]
-                                  return updated
-                                })
-                              }}
-                              className="absolute top-2 right-2 bg-destructive text-destructive-foreground rounded-full w-6 h-6 flex items-center justify-center text-xs hover:bg-destructive/80"
-                            >
-                              ×
-                            </button>
-                          </div>
-                        )}
-                        <input
-                          type="text"
-                          value={block.alt || ''}
-                          onChange={(e) => updateContentBlock(index, { alt: e.target.value })}
-                          className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                          placeholder="Alt text (for accessibility)"
-                        />
-                        <input
-                          type="text"
-                          value={block.caption || ''}
-                          onChange={(e) => updateContentBlock(index, { caption: e.target.value })}
-                          className="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
-                          placeholder="Caption (optional)"
-                        />
-                      </div>
-                    )}
-                  </div>
-                ))}
-                
-                <div className="flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('paragraph')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + Paragraph
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('heading1')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + H1
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('heading2')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + H2
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('heading3')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + H3
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('heading4')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + H4
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => addContentBlock('image')}
-                    className="px-3 py-1 bg-secondary text-secondary-foreground rounded-md hover:bg-secondary/80 transition-colors text-sm"
-                  >
-                    + Image
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Submit Buttons */}
-            <div className="flex gap-4 pt-4 border-t border-border">
-                <button
-                type="submit"
-                disabled={loading}
-                className="flex-1 bg-primary text-primary-foreground py-2 px-4 rounded-md hover:bg-primary/80 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                {loading ? 'Publishing...' : 'Publish Blog'}
-                </button>
-              <button
-                type="button"
-                onClick={() => router.push('/blog')}
-                className="px-6 py-2 border border-border text-foreground rounded-md hover:bg-muted transition-colors"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-          </QueryClientProvider>
-        </div>
-
-        {/* Live Preview Section - Now Sticky */}
-        <div className="lg:sticky lg:top-16 lg:h-fit">
-          <div className="bg-card rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-semibold text-foreground mb-4">Live Preview</h2>
-            
-            <div className="space-y-4">
-              {formData.title && (
-                <h1 className="text-2xl font-bold text-foreground">{formData.title}</h1>
-              )}
-              
-              {(formData.author || formData.publishedAt || formData.readTime) && (
-                <div className="flex flex-wrap gap-4 text-sm text-muted-foreground border-b border-border pb-4">
-                  {formData.author && <span>By {formData.author}</span>}
-                  {formData.publishedAt && <span>{new Date(formData.publishedAt).toLocaleDateString()}</span>}
-                  {formData.readTime && <span>{formData.readTime}</span>}
-                </div>
-              )}
-              
-              {formData.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2">
-                  {formData.tags.map((tag, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-primary text-primary-foreground rounded text-xs"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
-              
-              {formData.featuredImage && (
-                <div className="w-full h-48 bg-muted rounded-lg overflow-hidden">
-                  <img
-                    src={formData.featuredImage}
-                    alt="Featured"
-                    className="w-full h-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.style.display = 'none'
-                    }}
-                  />
-                </div>
-              )}
-              
-              <div className="space-y-4">
-                {formData.content.map((block, index) => (
-                  <div key={index}>
-                    {block.type === 'paragraph' && block.text && (
-                      <p className="text-foreground leading-relaxed">{block.text}</p>
-                    )}
-                    {block.type === 'heading1' && block.text && (
-                      <h1 className="text-3xl font-bold text-foreground">{block.text}</h1>
-                    )}
-                    {block.type === 'heading2' && block.text && (
-                      <h2 className="text-2xl font-bold text-foreground">{block.text}</h2>
-                    )}
-                    {block.type === 'heading3' && block.text && (
-                      <h3 className="text-xl font-bold text-foreground">{block.text}</h3>
-                    )}
-                    {block.type === 'heading4' && block.text && (
-                      <h4 className="text-lg font-bold text-foreground">{block.text}</h4>
-                    )}
-                    {block.type === 'image' && block.src && (
-                      <div className="space-y-2">
-                        <img
-                          src={block.src}
-                          alt={block.alt || ''}
-                          className="w-full rounded-lg"
-                          onError={(e) => {
-                            e.currentTarget.style.display = 'none'
-                          }}
-                        />
-                        {block.caption && (
-                          <p className="text-sm text-muted-foreground italic text-center">
-                            {block.caption}
-                          </p>
-                        )}
-                      </div>
-                    )}
-                  </div>
-                ))}
               </div>
               
-              {formData.content.length === 0 && (
-                <p className="text-muted-foreground italic">
-                  Start adding content blocks to see your blog preview here.
-                </p>
-              )}
+              {/* Preview */}
+              <div className="flex flex-col h-full overflow-hidden">
+                <div className="p-3 border-b bg-muted/50 font-medium text-sm shrink-0">
+                  Live Preview
+                </div>
+                <div className="flex-1 overflow-y-auto p-6 bg-background">
+                  <article className="prose dark:prose-invert prose-p:leading-relaxed prose-pre:bg-muted prose-pre:text-muted-foreground prose-img:rounded-md max-w-none">
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {formData.content || '*Preview will appear here...*'}
+                    </ReactMarkdown>
+                  </article>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-
-      {/* Add error display */}
-      {error && (
-        <div className="bg-destructive/10 border border-destructive text-destructive px-4 py-3 rounded mb-4">
-          {error}
-        </div>
-      )}
+      </form>
     </div>
-  )
+  );
 }

@@ -20,15 +20,6 @@ model Blog {
   publishedAt    DateTime
   readTime       String
   tags           String[]
-  featuredImage  String   // Keep this for backward compatibility
-  content        Json
-}
-
-model Image {
-  id        String   @id @default(cuid()) @map("_id")
-  filename  String
-  mimeType  String
-  size      Int
-  data      String   // base64 encoded image data
-  uploadedAt DateTime @default(now())
+  featuredImage  String
+  content        String
 }

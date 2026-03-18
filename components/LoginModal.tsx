@@ -37,6 +37,7 @@ export default function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
       // Success - redirect to create page
       router.push('/blog/create');
+      router.refresh();
       onClose();
       
     } catch (error) {

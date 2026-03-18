@@ -1,16 +1,16 @@
-import { redirect } from 'next/navigation';
 import { isAuthenticated } from '../../../lib/auth';
 import Header from "./header";
 import CreateBlogForm from "./blog-data-entry";
 import BlogManagement from "@/components/BlogManagement";
+import LoginRedirect from "./login-redirect";
 
 export default async function CreateBlogPage() {
   // Check if user is authenticated (server-side)
   const authenticated = await isAuthenticated();
   
   if (!authenticated) {
-    // Redirect to blog list if not authenticated
-    redirect('/blog');
+    // If not authenticated, render a client component that manages the Login Modal
+    return <LoginRedirect />;
   }
 
   return (
@@ -23,4 +23,3 @@ export default async function CreateBlogPage() {
     </>
   );
 }
-
