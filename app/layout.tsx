@@ -67,7 +67,11 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
     },
   },
-  icons: "/yuru-camp.png",
+  icons: {
+    icon: [{ url: "/yuru-camp.png", type: "image/png" }],
+    shortcut: [{ url: "/yuru-camp.png", type: "image/png" }],
+    apple: [{ url: "/yuru-camp.png", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({
