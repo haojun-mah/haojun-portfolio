@@ -4,99 +4,43 @@ import { Icons } from "@/components/icons";
 export const workExperience = [
   {
     company: "Fly Fairly",
-    title: "Product Manager Intern",
+    title: "Software Engineer Intern",
     logoUrl: "/flyfairly.png",
     href: "https://example.com",
     badges: ["React", "Node.js", "TypeScript"],
     start: "Jan 2026",
-    end: "April 2026",
+    end: "Apr 2026",
     description: [
-      "Product Manager Intern at Fly Fairly, conducted product research and stakeholder interviews to identify problems in the processes.",
-      "Developed prototypes of potential solutions and conducted feedback testing.",
-      "Wrote product requirement documents and functional specifications for the development team to implement solutions.",
+      "Identified and eliminated **3 key operational bottlenecks** through structured stakeholder interviews.",
+      "Built back-office reporting dashboard with **Next.js**, reducing cross-team coordination overhead and improving sprint throughput by an estimated **20%**.",
+      "Proposed and documented modernized tech stack solutions for interviewed problems which were adopted into the **technical roadmap** for **3 out of 6** company departments."
     ] 
   },
-  // {
-  //   company: "Developer Group @ NUS Computing",
-  //   title: "Software Engineer",
-  //   logoUrl: "/dgsc.png",
-  //   href: "https://example.com",
-  //   badges: ["React", "Node.js", "TypeScript"],
-  //   start: "Aug 2025",
-  //   end: "Present",
-  //   description: [
-  //     "Working with Caring For Life.",
-  //     "Building a full-stack application to streamline the processes in Caring For Life."
-  //   ] 
-  // },
-  // {
-  //   company: "NUS Fintech Society",
-  //   title: "Software Engineer",
-  //   logoUrl: "/nusfintech.png",
-  //   href: "https://example.com",
-  //   badges: ["React", "Node.js", "TypeScript"],
-  //   start: "Aug 2025",
-  //   end: "Present",
-  //   description: [
-  //     "Working with HeyMax",
-  //     "Building an AI itinerary planner with tools to build itinerary when given social media links and inputs."
-  //   ] 
-  // },
-  // {
-  //   company: "GroceryPicker",
-  //   title: "Founder",
-  //   logoUrl: "/grocerypicker.png",
-  //   href: "https://example.com",
-  //   start: "May 2025",
-  //   end: "Present",
-  //   description: [
-  //     "Grocery errands take alot of time and effort when trying to maximise cost savings moving between grocery stores and comparing items individually.",
-  //     "Created a mobile application with build in optimization for grocery list, letting users find the grocery store with the cheapest grocery for every item.",
-  //     "Received feedback and pivoted to targetting online grocery shopping.",
-  //     "Building a web application which builds grocery carts containing the cheapest grocery items from different online retailers and allowing them to purchase from different retailers with a click of a button."
-  //   ] 
-  // },
+  
   {
-    company: "TOPPAN Ecquaria",
+    company: "Toppan Ecquaria",
     title: "Software Engineer Intern",
     logoUrl: "/toppanecquaria.jpg",
     href: "https://example.com",
     start: "May 2025",
-    end: "Aug 2025",
+    end: "Jul 2025",
     description: [
-      "Built and integrated RAG pipelines and AI agents into enterprise products used by 10+ companies, enhancing product capabilities and driving adoption of AI features in said products.",
-      "Enhanced an AI lip dubbing system by leveraging open-source audio models such as Kokoro and the LatentSync lip-sync model, enabling multilingual AI video dubbing solutions.",
-      "Refactored and modernized multiple web applications using React and FastAPI, improving UI performance, scalability, and production-readiness for deployment across the Toppan Next Group.",
-      "Conducted QA Testing for AI Team products and did research on AI trends and new AI technology.",
-      "Enjoyed working in a team development environment and learnt plenty on software development from experienced colleagues."
+      "Designed and integrated **RAG pipelines** and **LLM-based AI agents** into enterprise SaaS products, enabling context-aware document Q&A; deployed across **10+ client companies**, directly contributing to new product adoption.",
+      "Enhanced an AI lip dubbing system by leveraging open-source audio models such as **Kokoro** and the **LatentSync** lip-sync model, enabling multilingual AI video dubbing solutions sold at **$5,000 per license**.",
+      "Refactored and modernized multiple web applications using **React** and **FastAPI**, improving UI performance and scalability for the group's **2,000 users**."
     ] 
   },
   {
     company: "Lyza Education",
-    title: "Software Programming Instructor",
+    title: "Software Engineer Intern",
     logoUrl: "/lyzaeducation.jpg",
     badges: ["Python", "JavaScript", "Teaching"],
     start: "Mar 2024",
     end: "May 2024",
     description: [
-      "Taught programming fundamentals to students. Created curriculum and conducted one-on-one sessions.",
-      "Reaffirmed my passion for tech-for-good and found meaning in inspiring the next generation of builders and thinkers."
+      "Built and deployed a web-based learning management tool in **Next.js** used by **100+ students** to submit assignments, track progress, and receive automated feedback on programming exercises."
     ]
   },
-  // {
-  //   company: "Millenium Timepieces",
-  //   title: "Freelance Software Developer",
-  //   logoUrl: "/milleniumtimepieces.jpg",
-  //   badges: ["Next.js", "Prisma", "MongoDB"],
-  //   start: "Feb 2024",
-  //   end: "Jun 2024",
-  //   description: [
-  //     "Commissioned to build an inventory tracker for watches; Inventory tracker is used to handle 50+ transactions.",
-  //     "Developed tracker with React, Node.js, PostgreSQL and hosted on Vercel.",
-  //     "Wrote functional specification of inventory tracker with founder.",
-  //     "Really enjoyed the high-octane work of discussing product outcomes, receiving user feedback and improving on it and even negotiating payment. This blossomed my passion "
-  //   ]
-  // },
   {
     company: "Singapore Armed Forces",
     title: "Deputy Staffer 4 Officer, 21 Singapore Artillery",
@@ -111,20 +55,6 @@ export const workExperience = [
       "Genuinely one of the most fun and meaningful moments of my life. Enjoyed meeting people from different walks of life serving the same mission. Really reignited the patriotism in me."
     ]
   },
-  // {
-  //   company: "Central Provident Fund",
-  //   title: "Customer Service Executive",
-  //   logoUrl: "/CPF.png",
-  //   badges: ["Next.js", "Prisma", "MongoDB"],
-  //   start: "Dec 2021",
-  //   end: "Feb 2022",
-  //   description: [
-  //     "Handled calls and queries from 30+ customers daily. Mainly through calls and write-in.",
-  //     "Specialised in Silver Support Scheme and policies involving the elderly. Helped customers manage their savings and obtain financial help.",
-  //     "Enjoyed making a positive impact to many. This sparked my passion for building products for good.",
-  //     "Learnt how to communicate clearly and effectively and had a knack for convincing and selling to people."
-  //   ]
-  // },
 ];
 
 export const projectData = [  
@@ -159,7 +89,7 @@ export const projectData = [
       ],
       image: "",
       video:
-        "https://camlijqyfbfxycsyyzmo.supabase.co/storage/v1/object/public/project-video/2025-09-01%2012-05-23.mkv",
+        "https://youtu.be/cE4w29sNgLQ",
     },
       {
       title: "Orbital Project Log Generator",
@@ -182,7 +112,7 @@ export const projectData = [
       ],
       image: "",
       video:
-        "https://camlijqyfbfxycsyyzmo.supabase.co/storage/v1/object/public/project-video/Projectlogfinal.mp4",
+        "https://youtu.be/O3_bBsJRbgQ",
     },
       {
       title: "GroceryPicker",
@@ -230,7 +160,7 @@ export const projectData = [
       ],
       image: "",
       video:
-        "https://camlijqyfbfxycsyyzmo.supabase.co/storage/v1/object/public/project-video/GroceryPickerPreview.mp4",
+        "https://youtu.be/E0fc65hqdE4"
     },
     {
       title: "3D Parkour",
@@ -254,7 +184,7 @@ export const projectData = [
       ],
       image: "",
       video:
-        "https://camlijqyfbfxycsyyzmo.supabase.co/storage/v1/object/public/project-video/ParkourFinal.mp4",
+        "https://youtu.be/0maBoQnJcNo",
     },
     {
       title: "Aim Labs",
@@ -278,7 +208,7 @@ export const projectData = [
       ],
       image: "",
       video:
-        "https://camlijqyfbfxycsyyzmo.supabase.co/storage/v1/object/public/project-video/AimlabsFinal.mp4",
+        "https://youtu.be/GcTnzl00pJo"
     },
 
   ];
@@ -314,8 +244,8 @@ export const DATA = {
       degree: "Bachelor of Computing, Computer Science",
       logoUrl: "/nus.jpg",
       start: "2024",
-      end: "2028",
-      description: ["Grade: First Class Honors"],
+      end: "2027",
+      description: ["Extracurricular: Google Developer Student Club Software Engineer, NUS Fintech Society Software Engineer", "Grade: First Class Honors"],
     },
     {
       school: "Nanyang Junior College",

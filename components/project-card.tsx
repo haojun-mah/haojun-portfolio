@@ -47,10 +47,28 @@ export function ProjectCard({
 }: Props) {
   const [isVideoModalOpen, setIsVideoModalOpen] = useState(false);
 
-  const handleVideoClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const getYouTubeId = (url: string) => {
+    const trimmed = url.trim();
+    const patterns = [
+      /(?:youtube\.com\/watch\?v=|youtu\.be\/)([A-Za-z0-9_-]{11})/,
+      /youtube\.com\/embed\/([A-Za-z0-9_-]{11})/,
+      /youtube\.com\/shorts\/([A-Za-z0-9_-]{11})/,
+    ];
+
+    for (const pattern of patterns) {
+      const match = trimmed.match(pattern);
+      if (match?.[1]) return match[1];
+    }
+
+    return null;
+  };
+
+  const youtubeId = video ? getYouTubeId(video) : null;
+
+  const handleMediaClick = (e: React.MouseEvent) => {
     if (video) {
+      e.preventDefault();
+      e.stopPropagation();
       setIsVideoModalOpen(true);
     }
   };
@@ -69,15 +87,24 @@ export function ProjectCard({
         <Link
           href={href || "#"}
           className={cn("block cursor-pointer", className)}
+          onClick={handleMediaClick}
         >
-          {video && (
-            <div 
-              className="relative cursor-pointer"
-              onClick={handleVideoClick}
-            >
+          {video && youtubeId && (
+            <div className="relative cursor-pointer">
+              <Image
+                src={`https://img.youtube.com/vi/${youtubeId}/hqdefault.jpg`}
+                alt={`${title} YouTube thumbnail`}
+                width={500}
+                height={300}
+                unoptimized
+                className="h-40 w-full overflow-hidden object-cover object-top"
+              />
+            </div>
+          )}
+          {video && !youtubeId && (
+            <div className="relative cursor-pointer">
               <video
                 src={video}
-                autoPlay
                 loop
                 muted
                 playsInline
@@ -157,23 +184,33 @@ export function ProjectCard({
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.8 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative max-w-4xl max-h-[80vh] w-full"
+              className="relative w-[95vw] max-w-6xl max-h-[90vh]"
               onClick={(e) => e.stopPropagation()}
             >
               <div className="aspect-video w-full bg-black rounded-lg shadow-2xl overflow-hidden">
-                <video
-                  src={video}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  controls
-                  className="w-full h-full object-contain"
-                />
+                {youtubeId ? (
+                  <iframe
+                    src={`https://www.youtube.com/embed/${youtubeId}`}
+                    title={`${title} YouTube player`}
+                    className="w-full h-full"
+                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                    allowFullScreen
+                  />
+                ) : (
+                  <video
+                    src={video}
+                    loop
+                    muted
+                    playsInline
+                    controls
+                    className="w-full h-full object-contain"
+                  />
+                )}
               </div>
               <button
                 onClick={handleCloseModal}
-                className="absolute -top-4 -right-4 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors duration-200 shadow-lg z-10"
+                className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors duration-200 shadow-lg z-10"
               >
                 <X className="w-5 h-5 text-white" />
               </button>

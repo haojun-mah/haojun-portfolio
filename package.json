@@ -33,7 +33,7 @@
     "remark-gfm": "^4.0.1",
     "tailwind-merge": "^3.3.1",
     "tech-stack-icons": "^3.3.2",
-    "vercel": "^48.12.1"
+    "vercel": "^32.0.1"
   },
   "overrides": {
     "tech-stack-icons": {
@@ -52,8 +52,8 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.4.6",
-    "next": "^15.5.2",
+    "eslint-config-next": "^16.1.7",
+    "next": "^16.1.7",
     "prisma": "^6.14.0",
     "tailwindcss": "^4",
     "tw-animate-css": "^1.3.7",

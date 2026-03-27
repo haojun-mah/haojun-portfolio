@@ -23,17 +23,17 @@ export default async function Home() {
           <div aria-hidden className="absolute -bottom-24 -right-24 w-96 h-96 rounded-full bg-secondary/10 blur-3xl" />
 
           <div className="max-w-7xl px-4 sm:px-6 mx-auto pt-16 sm:pt-20 pb-12 sm:pb-16">
-            <div className="grid lg:grid-cols-2 items-center">
+            <div className="grid lg:grid-cols-2 items-center gap-8 lg:gap-12">
               {/* Hero Content - Left Side */}
               <BlurFade delay={BLUR_FADE_DELAY * 2}>
-                <div className="space-y-4 sm:space-y-6 lg:pr-8">
+                <div className="space-y-4 sm:space-y-6">
                   <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight">
                     Hello! I&apos;m <span className="text-primary">Hao Jun</span><br />
                   </h1>
                   <h3 className="text-base sm:text-xl text-muted-foreground max-w-prose">
                     <span className="whitespace-nowrap font-bold text-foreground">Computer Science @ National University of Singapore</span>
                     <br  />
-                    <span className="whitespace-nowrap">Areas of Interests: <span className="font-bold text-foreground">Parallel Computing</span> and <span className="font-bold text-foreground">Artificial Intelligence</span></span>
+                    <span className="whitespace-nowrap">Areas of Interests: <span className="font-bold text-foreground">Parallel Computing</span> and <span className="font-bold text-foreground">Software Engineering</span></span>
                   </h3>
                   <div className="flex flex-wrap gap-3 mt-10">
                     <Link href="https://www.linkedin.com/in/hao-jun-mah-7b22b7210" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-5 py-2.5 bg-primary text-primary-foreground rounded-md hover:bg-primary/90 transition">
@@ -53,17 +53,17 @@ export default async function Home() {
                  </div>
                 </div>
               </BlurFade>
-              
+
               {/* Hero Visual - Right Side */}
               <BlurFade delay={BLUR_FADE_DELAY * 1}>
-                <div className="relative flex justify-center lg:justify-end lg:pl-8">
-                  <Avatar className="size-48 sm:size-56 md:size-64 lg:size-72 border">
+                <div className="relative flex justify-center lg:justify-end">
+                  <Avatar className="w-56 h-44 sm:w-64 sm:h-52 md:w-72 md:h-56 lg:w-[25rem] lg:h-64 border rounded-3xl">
                     <AvatarImage 
                       alt="Haojun face" 
                       src="/haojunpic1.jpg" 
-                      className="object-cover object-center"
+                      className="aspect-auto object-cover object-center"
                     />
-                    <AvatarFallback>HJ</AvatarFallback>
+                    <AvatarFallback className="rounded-3xl">HJ</AvatarFallback>
                   </Avatar>
                 </div>
               </BlurFade>
@@ -85,9 +85,13 @@ export default async function Home() {
                     description={
                       <div className="space-y-2 mt-2">
                         {work.description.map((desc, i) => (
-                           <div key={i} className="flex gap-2 items-start">
-                             <div className="mt-2 shrink-0 bg-primary h-1.5 w-1.5 rounded-full" />
-                             <span className="text-foreground/80">{desc}</span>
+                           <div key={i} className="text-foreground/80">
+                             {desc.split(/(\*\*.*?\*\*)/g).map((part, index) => {
+                               if (part.startsWith("**") && part.endsWith("**")) {
+                                 return <span key={index} className="font-bold text-foreground">{part.slice(2, -2)}</span>;
+                               }
+                               return part;
+                             })}
                           </div>
                         ))}
                       </div>
