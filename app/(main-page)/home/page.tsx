@@ -1,4 +1,5 @@
 "use server";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BlurFade } from "@/components/magicui/blur-fade";
 import { ProjectCard } from "@/components/project-card";
@@ -11,11 +12,54 @@ import { ClientTweetCard } from "@/components/ui/tweet-card";
 
 const BLUR_FADE_DELAY = 0.04;
 
+export const metadata: Metadata = {
+  title: "Home",
+  description:
+    "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+  alternates: {
+    canonical: "/home",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://www.haojunmah.app/home",
+    siteName: "Haojun Mah Portfolio",
+    title: "Haojun Mah | Software Engineer Portfolio",
+    description:
+      "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Haojun Mah | Software Engineer Portfolio",
+    description:
+      "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+  },
+};
+
 
 
 export default async function Home() {
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Haojun Mah",
+    alternateName: "Hao Jun Mah",
+    url: "https://www.haojunmah.app",
+    image: "https://www.haojunmah.app/haojunpic1.jpg",
+    jobTitle: "Software Engineer",
+    alumniOf: "National University of Singapore",
+    sameAs: [
+      "https://github.com/haojun-mah",
+      "https://www.linkedin.com/in/hao-jun-mah-7b22b7210",
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
         {/* Hero + About Me Combined */}
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-b from-primary/10 via-transparent to-transparent pointer-events-none" />
