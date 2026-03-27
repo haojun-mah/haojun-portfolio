@@ -1,6 +1,5 @@
 import { Icons } from "@/components/icons";
 
-// Work experience data
 export const workExperience = [
   {
     company: "Fly Fairly",
