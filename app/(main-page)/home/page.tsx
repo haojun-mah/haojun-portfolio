@@ -12,9 +12,8 @@ import { ClientTweetCard } from "@/components/ui/tweet-card";
 const BLUR_FADE_DELAY = 0.04;
 
 export const metadata: Metadata = {
-  title: "Home",
-  description:
-    "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+  title: "Hao Jun's Portfolio",
+  description: "Hello! I'm Hao Jun. This is my portfolio.",
   alternates: {
     canonical: "/home",
   },
@@ -22,16 +21,14 @@ export const metadata: Metadata = {
     type: "website",
     url: "https://www.haojunmah.app/home",
     siteName: "Haojun Mah Portfolio",
-    title: "Haojun Mah | Software Engineer Portfolio",
-    description:
-      "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+    title: "Hao Jun's Portfolio",
+    description: "Hello! I'm Hao Jun. This is my portfolio.",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Haojun Mah | Software Engineer Portfolio",
-    description:
-      "Explore Haojun Mah's software engineering portfolio, including projects in AI, full-stack development, and parallel computing.",
+    title: "Hao Jun's Portfolio",
+    description: "Hello! I'm Hao Jun. This is my portfolio.",
   },
 };
 
