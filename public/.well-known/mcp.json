@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "haojun-portfolio": {
+      "url": "https://haojunmah.app/api/mcp",
+      "name": "Haojun Mah Portfolio",
+      "description": "MCP server for Haojun Mah's portfolio. Provides structured access to profile, work experience, projects, education, and blog posts.",
+      "version": "1.0.0"
+    }
+  }
+}
