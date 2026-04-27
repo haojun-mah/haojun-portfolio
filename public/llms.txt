@@ -1,0 +1,40 @@
+# Haojun Mah
+
+> Haojun Mah is a Computer Science student at the National University of Singapore (NUS) pursuing a Bachelor of Computing (2024–2027), specialising in parallel computing and software engineering. This portfolio documents his work experience, software projects, education, and technical writing.
+
+## Portfolio
+
+- [Home](https://haojunmah.app/home): Main portfolio page — bio, work experience, projects, education, and contact links.
+- [Blog](https://haojunmah.app/blog): Technical blog posts and articles written by Haojun.
+
+## Work Experience
+
+- **Fly Fairly** — Software Engineer Intern (Jan 2026 – Apr 2026): Built a back-office reporting dashboard in Next.js, identified 3 operational bottlenecks, and contributed to the technical roadmap.
+- **Toppan Ecquaria** — Software Engineer Intern (May 2025 – Jul 2025): Designed RAG pipelines and LLM-based AI agents for enterprise SaaS products; deployed across 10+ client companies. Enhanced an AI lip-dubbing system with Kokoro and LatentSync models.
+- **Lyza Education** — Software Engineer Intern (Mar 2024 – May 2024): Built a Next.js learning management tool used by 100+ students.
+- **Singapore Armed Forces** — Deputy Staffer 4 Officer (Feb 2022 – Feb 2024): Artillery Officer responsible for a company of 80+ soldiers.
+
+## Projects
+
+- [Hao Jun's Portfolio](https://haojun-portfolio.vercel.app): Personal portfolio built with Next.js, TypeScript, Prisma, MongoDB, TailwindCSS, and Vercel.
+- [GroceryPicker](https://grocerypicker.expo.app/): Full-stack Android/web app for building grocery lists and finding the cheapest prices across stores. Built with React Native, TypeScript, Express.js, PostgreSQL, Supabase, and GCP.
+- [Orbital Project Log Generator](https://github.com/haojun-mah/orbital-projectlog-generator): Python script that converts git commit data into a project log CSV, with optional Groq AI hour estimation.
+- [3D Parkour](https://github.com/haojun-mah/parkour): Third-person parkour simulator built from scratch with a custom C++/OpenGL game engine.
+- [Aim Labs](https://github.com/haojun-mah/aimlab): First-person shooting trainer built with a custom C++/OpenGL game engine.
+
+## Education
+
+- **National University of Singapore** — B.Comp. Computer Science, 2024–2027. First Class Honours. Active in Google Developer Student Club and NUS Fintech Society.
+- **Nanyang Junior College** — GCE A-Levels.
+
+## Contact & Profiles
+
+- GitHub: https://github.com/haojun-mah
+- LinkedIn: https://www.linkedin.com/in/hao-jun-mah-7b22b7210/
+
+## Agent Access
+
+- [llms.txt](https://haojunmah.app/llms.txt): This document — top-level index for agents.
+- [llms-full.txt](https://haojunmah.app/llms-full.txt): Full content snapshot for long-context ingestion.
+- [skill.md](https://haojunmah.app/skill.md): Agent skill definition for navigating this portfolio.
+- Markdown pages: Append `.md` to any page URL (e.g. `/home.md`) or send `Accept: text/markdown` to receive markdown content.

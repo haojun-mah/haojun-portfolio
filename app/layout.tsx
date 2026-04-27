@@ -83,6 +83,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          {/* Agent navigation directive — visually hidden, machine-readable */}
+          <p style={{ position: "absolute", left: "-9999px", height: "1px", overflow: "hidden", whiteSpace: "nowrap" }}>
+            For the complete documentation index, see <a href="/llms.txt">llms.txt</a>. Full content snapshot at <a href="/llms-full.txt">llms-full.txt</a>. Agent skill definition at <a href="/skill.md">skill.md</a>.
+          </p>
           <Navbar />
           <main>
             {children}

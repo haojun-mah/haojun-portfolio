@@ -1,0 +1,149 @@
+# Haojun Mah — Full Portfolio
+
+> For the complete documentation index, see [llms.txt](https://haojunmah.app/llms.txt).
+
+Haojun Mah is a Computer Science student at the National University of Singapore (NUS), graduating in 2027 with a Bachelor of Computing. He specialises in parallel computing and software engineering, and has industry experience building AI-powered enterprise software, full-stack web applications, and mobile apps. He is currently pursuing a First Class Honours degree and is actively involved in Google Developer Student Club and NUS Fintech Society.
+
+---
+
+## About
+
+- **Name**: Haojun Mah (Hao Jun Mah)
+- **Role**: Software Engineer / CS Student
+- **University**: National University of Singapore (NUS), 2024–2027
+- **Degree**: Bachelor of Computing, Computer Science — First Class Honours
+- **Areas of Interest**: Parallel Computing, Software Engineering, AI/ML, Systems Programming
+- **Location**: Singapore
+- **GitHub**: https://github.com/haojun-mah
+- **LinkedIn**: https://www.linkedin.com/in/hao-jun-mah-7b22b7210/
+- **Portfolio**: https://haojunmah.app
+
+---
+
+## Work Experience
+
+### Fly Fairly — Software Engineer Intern
+**Duration**: Jan 2026 – Apr 2026  
+**Technologies**: React, Node.js, TypeScript, Next.js
+
+- Identified and eliminated 3 key operational bottlenecks through structured stakeholder interviews.
+- Built a back-office reporting dashboard with Next.js, reducing cross-team coordination overhead and improving sprint throughput by an estimated 20%.
+- Proposed and documented modernised tech stack solutions for interviewed problems, which were adopted into the technical roadmap for 3 out of 6 company departments.
+
+---
+
+### Toppan Ecquaria — Software Engineer Intern
+**Duration**: May 2025 – Jul 2025
+
+- Designed and integrated RAG pipelines and LLM-based AI agents into enterprise SaaS products, enabling context-aware document Q&A; deployed across 10+ client companies, directly contributing to new product adoption.
+- Enhanced an AI lip-dubbing system by leveraging open-source audio models such as Kokoro and the LatentSync lip-sync model, enabling multilingual AI video dubbing solutions sold at $5,000 per licence.
+- Refactored and modernised multiple web applications using React and FastAPI, improving UI performance and scalability for the group's 2,000 users.
+
+---
+
+### Lyza Education — Software Engineer Intern
+**Duration**: Mar 2024 – May 2024  
+**Technologies**: Python, JavaScript, Teaching
+
+- Built and deployed a web-based learning management tool in Next.js used by 100+ students to submit assignments, track progress, and receive automated feedback on programming exercises.
+
+---
+
+### Singapore Armed Forces — Deputy Staffer 4 Officer, 21 Singapore Artillery
+**Duration**: Feb 2022 – Feb 2024  
+**Skills**: Leadership, Logistics, Training
+
+- Trained and served as an Artillery Officer with expertise in fire direction calculation, gun positioning, and war strategy.
+- In-charge of a company of 80+ soldiers, responsible for their welfare and training.
+- Specialised in logistics; completed both Junior and Advanced Logistics courses.
+
+---
+
+## Projects
+
+### Hao Jun's Portfolio
+**Date**: Aug 2025  
+**Status**: Active  
+**Technologies**: Next.js, TypeScript, Prisma, MongoDB, TailwindCSS, Shadcn UI, Magic UI, Vercel  
+**Links**: [Website](https://haojun-portfolio.vercel.app) | [GitHub](https://github.com/haojun-mah/haojun-portfolio)
+
+Personal portfolio website showcasing work experience, education, and projects. Designed with a focus on UI aesthetics, animations, and personal brand.
+
+---
+
+### GroceryPicker
+**Date**: May 2025 – Aug 2025  
+**Technologies**: React Native, TypeScript, Express.JS, PostgreSQL, Supabase, NativeWindCSS, GCP, RAG, Playwright, Jest, Python  
+**Links**: [Website](https://grocerypicker.expo.app/) | [GitHub](https://github.com/haojun-mah/GroceryPicker)
+
+Full-stack Android application with web support. Helps users build grocery lists and find the cheapest grocery items from various stores, maximising savings without having to compare prices across shops in person. Uses RAG to intelligently parse grocery data.
+
+---
+
+### Orbital Project Log Generator
+**Date**: July 2025  
+**Technologies**: Python, Groq API, GitHub API  
+**Links**: [GitHub](https://github.com/haojun-mah/orbital-projectlog-generator)
+
+A Python script that converts git commit data into a project log CSV file. Designed to eliminate the tedium of creating project logs for NUS Orbital. Optionally uses the Groq API to estimate hours spent on each task.
+
+---
+
+### 3D Parkour
+**Date**: Jun 2024 – Jul 2024  
+**Technologies**: C++, OpenGL, Game Development, Game Engine  
+**Links**: [GitHub](https://github.com/haojun-mah/parkour)
+
+A third-person parkour simulator where the player navigates a character through a parkour course. Built entirely from scratch using a custom game engine written in C++ and OpenGL, with custom graphics and physics systems.
+
+---
+
+### Aim Labs
+**Date**: May 2024 – Jun 2024  
+**Technologies**: C++, OpenGL, Game Development, Game Engine  
+**Links**: [GitHub](https://github.com/haojun-mah/aimlab)
+
+A first-person shooting trainer inspired by KovaaK's Aim Trainer. Built with a custom C++/OpenGL game engine. Players shoot down targets to improve aim.
+
+---
+
+## Education
+
+### National University of Singapore (NUS)
+**Degree**: Bachelor of Computing, Computer Science  
+**Period**: 2024 – 2027  
+**Grade**: First Class Honours  
+**Extracurriculars**: Google Developer Student Club (Software Engineer), NUS Fintech Society (Software Engineer)  
+**Website**: https://nus.edu.sg/
+
+---
+
+### Nanyang Junior College
+**Qualification**: GCE A-Levels
+
+---
+
+## Technical Skills
+
+**Languages**: TypeScript, JavaScript, Python, C++, SQL  
+**Frameworks**: Next.js, React, React Native, FastAPI, Express.js  
+**Databases**: PostgreSQL, MongoDB, Prisma  
+**Cloud & Infra**: Vercel, GCP, Supabase  
+**AI/ML**: RAG pipelines, LLM integration, LatentSync, Kokoro TTS, Groq API  
+**Tools**: OpenGL, Playwright, Jest, TailwindCSS, Shadcn UI
+
+---
+
+## Pages
+
+- [Home](https://haojunmah.app/home): Full portfolio with bio, work experience, projects, education.
+- [Blog](https://haojunmah.app/blog): Technical posts and articles.
+
+---
+
+## Agent Access
+
+- [llms.txt](https://haojunmah.app/llms.txt): Top-level index for agents.
+- [llms-full.txt](https://haojunmah.app/llms-full.txt): This document — full content snapshot.
+- [skill.md](https://haojunmah.app/skill.md): Agent skill definition.
+- Append `.md` to any page URL (e.g. `/home.md`) or send `Accept: text/markdown` to receive markdown.
