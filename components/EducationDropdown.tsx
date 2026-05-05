@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { BlurFade } from "@/components/magicui/blur-fade";
 import { ResumeCard } from "@/components/resume-card";
 
 interface EducationItem {
@@ -22,7 +21,6 @@ export default function EducationDropdown({ educationData, delay }: EducationDro
   const [isEducationOpen, setIsEducationOpen] = useState(false);
 
   return (
-    <BlurFade delay={delay}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12 flex min-h-0 flex-col gap-y-3 sm:gap-y-4">
         <button
           onClick={() => setIsEducationOpen(!isEducationOpen)}
@@ -39,8 +37,7 @@ export default function EducationDropdown({ educationData, delay }: EducationDro
         {isEducationOpen && (
           <div className="space-y-3 sm:space-y-4 mt-4">
             {educationData.map((education, id) => (
-              <BlurFade key={education.school} delay={delay + (id + 1) * 0.05}>
-                <ResumeCard
+                <ResumeCard key={education.school}
                   logoUrl={education.logoUrl || ""}
                   altText={education.school}
                   title={education.school}
@@ -50,11 +47,9 @@ export default function EducationDropdown({ educationData, delay }: EducationDro
                   description={education.description}
                   isEducation={true}
                 />
-              </BlurFade>
             ))}
           </div>
         )}
       </div>
-    </BlurFade>
   );
 }
