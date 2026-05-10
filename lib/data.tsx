@@ -58,36 +58,28 @@ export const workExperience = [
 
 export const projectData = [
   {
-    title: "Hao Jun's Portfolio",
-    href: "https://haojun-portfolio.vercel.app",
-    dates: "Aug 2025",
+    title: "Minecraft GPT",
+    href: "https://github.com/haojun-mah/minecraft-gpt",
+    dates: "May 2026",
     active: true,
     description:
-      "With application season coming up, I wanted to create a portfolio website that showcase my work experiece, education and projects. More importantly, I want to build a canvas that reflects my design philosophy and personal brand. Had alot of fun trying out new UI designs and cool animations. Let me know if there is any way I can improve on this portfolio.",
+      "When I was 14, I failed my art class. Back then I was addicted to Minecraft and I realised that I have zero artistic talent. Hence, we decided to build Minecraft GPT, a mod which allows us to spawn structures in through text and images only.",
     technologies: [
-      "Next.js",
-      "Typescript",
-      "Prisma",
-      "MongoDB",
-      "TailwindCSS",
-      "Shadcn UI",
-      "Magic UI",
-      "Vercel",
+      "Java",
+      "FastAPI",
+      "Exa",
+      "GPT Image",
+      "Fal API",
     ],
     links: [
       {
-        type: "Website",
-        href: "https://haojun-portfolio.vercel.app",
-        icon: <Icons.globe className="size-3" />,
-      },
-      {
         type: "GitHub",
-        href: "https://github.com/haojun-mah/haojun-portfolio",
+        href: "https://github.com/haojun-mah/minecraft-gpt",
         icon: <Icons.github className="size-3" />,
       },
     ],
     image: "",
-    video: "https://youtu.be/cE4w29sNgLQ",
+    video: "https://youtu.be/lJ81ANBxTJU",
   },
   {
     title: "Orbital Project Log Generator",
