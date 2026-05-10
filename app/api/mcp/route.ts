@@ -12,7 +12,12 @@ const PROFILE = {
   degree: "Bachelor of Computing, Computer Science",
   graduationYear: 2027,
   grade: "First Class Honours",
-  areasOfInterest: ["Parallel Computing", "Software Engineering", "AI/ML", "Systems Programming"],
+  areasOfInterest: [
+    "Parallel Computing",
+    "Software Engineering",
+    "AI/ML",
+    "Systems Programming",
+  ],
   github: "https://github.com/haojun-mah",
   linkedin: "https://www.linkedin.com/in/hao-jun-mah-7b22b7210/",
   portfolio: "https://haojunmah.app",
@@ -70,37 +75,59 @@ const PROJECTS = [
     url: "https://haojun-portfolio.vercel.app",
     github: "https://github.com/haojun-mah/haojun-portfolio",
     date: "Aug 2025",
-    technologies: ["Next.js", "TypeScript", "Prisma", "MongoDB", "TailwindCSS", "Shadcn UI", "Vercel"],
-    description: "Personal portfolio website showcasing work experience, education, and projects.",
+    technologies: [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "MongoDB",
+      "TailwindCSS",
+      "Shadcn UI",
+      "Vercel",
+    ],
+    description:
+      "Personal portfolio website showcasing work experience, education, and projects.",
   },
   {
     title: "GroceryPicker",
     url: "https://grocerypicker.expo.app/",
     github: "https://github.com/haojun-mah/GroceryPicker",
     date: "May 2025 – Aug 2025",
-    technologies: ["React Native", "TypeScript", "Express.JS", "PostgreSQL", "Supabase", "GCP", "RAG", "Python"],
-    description: "Full-stack Android/web app for building grocery lists and finding cheapest prices across stores.",
+    technologies: [
+      "React Native",
+      "TypeScript",
+      "Express.JS",
+      "PostgreSQL",
+      "Supabase",
+      "GCP",
+      "RAG",
+      "Python",
+    ],
+    description:
+      "Full-stack Android/web app for building grocery lists and finding cheapest prices across stores.",
   },
   {
     title: "Orbital Project Log Generator",
     github: "https://github.com/haojun-mah/orbital-projectlog-generator",
     date: "July 2025",
     technologies: ["Python", "Groq API", "GitHub API"],
-    description: "Converts git commit data into a project log CSV for NUS Orbital.",
+    description:
+      "Converts git commit data into a project log CSV for NUS Orbital.",
   },
   {
     title: "3D Parkour",
     github: "https://github.com/haojun-mah/parkour",
     date: "Jun 2024 – Jul 2024",
     technologies: ["C++", "OpenGL"],
-    description: "Third-person parkour simulator with a custom C++/OpenGL game engine.",
+    description:
+      "Third-person parkour simulator with a custom C++/OpenGL game engine.",
   },
   {
     title: "Aim Labs",
     github: "https://github.com/haojun-mah/aimlab",
     date: "May 2024 – Jun 2024",
     technologies: ["C++", "OpenGL"],
-    description: "First-person shooting trainer built with a custom C++/OpenGL game engine.",
+    description:
+      "First-person shooting trainer built with a custom C++/OpenGL game engine.",
   },
 ];
 
@@ -111,7 +138,10 @@ const EDUCATION = [
     start: "2024",
     end: "2027",
     grade: "First Class Honours",
-    extracurriculars: ["Google Developer Student Club (Software Engineer)", "NUS Fintech Society (Software Engineer)"],
+    extracurriculars: [
+      "Google Developer Student Club (Software Engineer)",
+      "NUS Fintech Society (Software Engineer)",
+    ],
     url: "https://nus.edu.sg/",
   },
   {
@@ -123,22 +153,26 @@ const EDUCATION = [
 const TOOLS = [
   {
     name: "get_profile",
-    description: "Returns Haojun Mah's professional profile, bio, and contact links.",
+    description:
+      "Returns Haojun Mah's professional profile, bio, and contact links.",
     inputSchema: { type: "object", properties: {}, required: [] },
   },
   {
     name: "get_work_experience",
-    description: "Returns full work experience list with company, title, dates, and key highlights.",
+    description:
+      "Returns full work experience list with company, title, dates, and key highlights.",
     inputSchema: { type: "object", properties: {}, required: [] },
   },
   {
     name: "get_projects",
-    description: "Returns all software projects with descriptions, technologies, and links.",
+    description:
+      "Returns all software projects with descriptions, technologies, and links.",
     inputSchema: { type: "object", properties: {}, required: [] },
   },
   {
     name: "get_education",
-    description: "Returns education history including degree, school, and extracurriculars.",
+    description:
+      "Returns education history including degree, school, and extracurriculars.",
     inputSchema: { type: "object", properties: {}, required: [] },
   },
 ];
@@ -163,12 +197,19 @@ function jsonRpcError(id: unknown, code: number, message: string) {
 }
 
 export async function POST(request: NextRequest) {
-  let body: { jsonrpc?: string; id?: unknown; method?: string; params?: Record<string, unknown> };
+  let body: {
+    jsonrpc?: string;
+    id?: unknown;
+    method?: string;
+    params?: Record<string, unknown>;
+  };
 
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(jsonRpcError(null, -32700, "Parse error"), { status: 400 });
+    return NextResponse.json(jsonRpcError(null, -32700, "Parse error"), {
+      status: 400,
+    });
   }
 
   const { id, method, params } = body;
@@ -196,7 +237,9 @@ export async function POST(request: NextRequest) {
   if (method === "tools/call") {
     const toolName = (params as { name?: string })?.name;
     if (!toolName) {
-      return NextResponse.json(jsonRpcError(id, -32602, "Missing tool name"), { status: 400 });
+      return NextResponse.json(jsonRpcError(id, -32602, "Missing tool name"), {
+        status: 400,
+      });
     }
     try {
       const result = handleTool(toolName);
@@ -209,13 +252,19 @@ export async function POST(request: NextRequest) {
       });
     } catch (err) {
       return NextResponse.json(
-        jsonRpcError(id, -32601, err instanceof Error ? err.message : "Tool error"),
-        { status: 404 }
+        jsonRpcError(
+          id,
+          -32601,
+          err instanceof Error ? err.message : "Tool error",
+        ),
+        { status: 404 },
       );
     }
   }
 
-  return NextResponse.json(jsonRpcError(id, -32601, "Method not found"), { status: 404 });
+  return NextResponse.json(jsonRpcError(id, -32601, "Method not found"), {
+    status: 404,
+  });
 }
 
 // GET endpoint returns server metadata for discoverability

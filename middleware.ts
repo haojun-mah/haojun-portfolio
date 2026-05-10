@@ -17,10 +17,7 @@ export function middleware(request: NextRequest) {
 
   // Handle content negotiation: Accept: text/markdown
   const accept = request.headers.get("accept") ?? "";
-  if (
-    accept.includes("text/markdown") &&
-    MARKDOWN_PATHS.has(pathname)
-  ) {
+  if (accept.includes("text/markdown") && MARKDOWN_PATHS.has(pathname)) {
     const url = request.nextUrl.clone();
     url.pathname = "/api/markdown";
     url.searchParams.set("path", pathname);

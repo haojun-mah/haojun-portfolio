@@ -26,7 +26,7 @@ export default function Navbar() {
                     href={item.href}
                     className={cn(
                       buttonVariants({ variant: "ghost", size: "icon" }),
-                      "size-10 sm:size-12 md:size-14 flex-shrink-0 transition-all duration-200 hover:scale-110 active:scale-95"
+                      "size-10 sm:size-12 md:size-14 flex-shrink-0 transition-all duration-200 hover:scale-110 active:scale-95",
                     )}
                   >
                     <item.icon className="size-4 sm:size-5 md:size-6" />
@@ -38,7 +38,10 @@ export default function Navbar() {
               </Tooltip>
             </DockIcon>
           ))}
-          <Separator orientation="vertical" className="h-8 sm:h-10 md:h-12 flex-shrink-0 mx-1" />
+          <Separator
+            orientation="vertical"
+            className="h-8 sm:h-10 md:h-12 flex-shrink-0 mx-1"
+          />
           {Object.entries(DATA.contact.social)
             .filter(([, social]) => social.navbar)
             .map(([name, social]) => (
@@ -49,7 +52,7 @@ export default function Navbar() {
                       href={social.url}
                       className={cn(
                         buttonVariants({ variant: "ghost", size: "icon" }),
-                        "size-10 sm:size-12 md:size-14 flex-shrink-0 transition-all duration-200 hover:scale-110 active:scale-95"
+                        "size-10 sm:size-12 md:size-14 flex-shrink-0 transition-all duration-200 hover:scale-110 active:scale-95",
                       )}
                     >
                       <social.icon className="size-4 sm:size-5 md:size-6" />
@@ -61,7 +64,10 @@ export default function Navbar() {
                 </Tooltip>
               </DockIcon>
             ))}
-          <Separator orientation="vertical" className="h-8 sm:h-10 md:h-12 py-2 flex-shrink-0 mx-1" />
+          <Separator
+            orientation="vertical"
+            className="h-8 sm:h-10 md:h-12 py-2 flex-shrink-0 mx-1"
+          />
           <DockIcon>
             <Tooltip>
               <TooltipTrigger asChild>

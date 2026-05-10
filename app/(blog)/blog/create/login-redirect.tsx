@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import LoginModal from '@/components/LoginModal';
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import LoginModal from "@/components/LoginModal";
 
 export default function LoginRedirect() {
   const router = useRouter();
@@ -10,7 +10,7 @@ export default function LoginRedirect() {
 
   const handleClose = () => {
     setIsOpen(false);
-    router.push('/blog');
+    router.push("/blog");
   };
 
   return (
