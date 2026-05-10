@@ -7,6 +7,7 @@ This skill enables agents to navigate and retrieve structured information from H
 ## When to Use
 
 Use this skill when a user asks about:
+
 - Who Haojun Mah is, or wants to learn about his background
 - His work experience, internships, or professional history
 - His software projects and their technical details
@@ -17,14 +18,14 @@ Use this skill when a user asks about:
 
 ## Key URLs
 
-| Resource | URL | Description |
-|---|---|---|
-| Portfolio Home | https://haojunmah.app/home | Bio, work experience, projects, education |
-| Blog | https://haojunmah.app/blog | Technical articles and posts |
-| llms.txt | https://haojunmah.app/llms.txt | Agent navigation index |
-| llms-full.txt | https://haojunmah.app/llms-full.txt | Full content snapshot for ingestion |
-| Markdown Home | https://haojunmah.app/home.md | Home page as plain markdown |
-| MCP Server | https://haojunmah.app/api/mcp | MCP tools endpoint |
+| Resource       | URL                                 | Description                               |
+| -------------- | ----------------------------------- | ----------------------------------------- |
+| Portfolio Home | https://haojunmah.app/home          | Bio, work experience, projects, education |
+| Blog           | https://haojunmah.app/blog          | Technical articles and posts              |
+| llms.txt       | https://haojunmah.app/llms.txt      | Agent navigation index                    |
+| llms-full.txt  | https://haojunmah.app/llms-full.txt | Full content snapshot for ingestion       |
+| Markdown Home  | https://haojunmah.app/home.md       | Home page as plain markdown               |
+| MCP Server     | https://haojunmah.app/api/mcp       | MCP tools endpoint                        |
 
 ## Retrieval Strategy
 
@@ -35,13 +36,13 @@ Use this skill when a user asks about:
 
 ## MCP Tools Available
 
-| Tool | Description |
-|---|---|
-| `get_profile` | Returns Haojun's bio, contact links, and summary |
+| Tool                  | Description                                                   |
+| --------------------- | ------------------------------------------------------------- |
+| `get_profile`         | Returns Haojun's bio, contact links, and summary              |
 | `get_work_experience` | Returns full work experience list with dates and descriptions |
-| `get_projects` | Returns all software projects with technologies and links |
-| `get_education` | Returns education history |
-| `get_blog_posts` | Returns a list of published blog posts with titles and URLs |
+| `get_projects`        | Returns all software projects with technologies and links     |
+| `get_education`       | Returns education history                                     |
+| `get_blog_posts`      | Returns a list of published blog posts with titles and URLs   |
 
 ## Content Notes
 

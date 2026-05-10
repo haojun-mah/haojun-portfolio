@@ -26,7 +26,7 @@ interface BlogListItem extends BlogData {
 // Server component - no useState, useEffect needed
 export default async function BlogList() {
   let blogs: BlogListItem[] = [];
-  let error = '';
+  let error = "";
 
   try {
     // Fetch blogs with optimized query
@@ -42,7 +42,7 @@ export default async function BlogList() {
         content: true,
       },
       orderBy: {
-        publishedAt: 'desc'
+        publishedAt: "desc",
       },
       // Add pagination if you have many blogs
       // take: 20,
@@ -56,42 +56,42 @@ export default async function BlogList() {
       readTime: blog.readTime,
       tags: blog.tags,
       featuredImage: blog.featuredImage,
-      content: blog.content
+      content: blog.content,
     }));
   } catch (err) {
-    console.error('Error fetching blogs:', err);
-    error = 'Failed to load blogs. Please try again later.';
+    console.error("Error fetching blogs:", err);
+    error = "Failed to load blogs. Please try again later.";
   }
 
   const getExcerpt = (content: string): string => {
-    if (!content) return 'No preview available...';
-    
+    if (!content) return "No preview available...";
+
     // Simple basic text extraction from markdown string
     // remove markdown image links
-    let plainText = content.replace(/!\[.*?\]\(.*?\)/g, '');
+    let plainText = content.replace(/!\[.*?\]\(.*?\)/g, "");
     // remove standard links
-    plainText = plainText.replace(/\[(.*?)\]\(.*?\)/g, '$1');
+    plainText = plainText.replace(/\[(.*?)\]\(.*?\)/g, "$1");
     // remove markdown headers
-    plainText = plainText.replace(/#+\s/g, '');
+    plainText = plainText.replace(/#+\s/g, "");
     // remove bold/italic
-    plainText = plainText.replace(/(\*|_)/g, '');
-    
+    plainText = plainText.replace(/(\*|_)/g, "");
+
     plainText = plainText.trim();
 
-    return plainText.length > 150 
-        ? plainText.substring(0, 150) + '...'
-        : plainText || 'No preview available...';
+    return plainText.length > 150
+      ? plainText.substring(0, 150) + "..."
+      : plainText || "No preview available...";
   };
 
   const formatDate = (dateString: string): string => {
     try {
-      return new Date(dateString).toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric'
+      return new Date(dateString).toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
       });
     } catch {
-      return 'Invalid date';
+      return "Invalid date";
     }
   };
 
@@ -108,27 +108,26 @@ export default async function BlogList() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-12">
-          <div>
-            <h1 className="text-4xl font-bold text-foreground mb-4">Blog</h1>
-            <p className="text-muted-foreground text-lg">
-              Hao Jun&apos;s Ramblings and Thoughts
-            </p>
-          </div>
+      {/* Header */}
+      <div className="flex justify-between items-center mb-12">
+        <div>
+          <h1 className="text-4xl font-bold text-foreground mb-4">Blog</h1>
+          <p className="text-muted-foreground text-lg">
+            Hao Jun&apos;s Ramblings and Thoughts
+          </p>
         </div>
+      </div>
 
       {/* Blog Count */}
       <div className="mb-8">
         <p className="text-muted-foreground">
-          {blogs.length} {blogs.length === 1 ? 'post' : 'posts'} published
+          {blogs.length} {blogs.length === 1 ? "post" : "posts"} published
         </p>
       </div>
 
       {/* Blog Grid */}
       {blogs.length === 0 ? (
-        <div className="text-center py-12">
-        </div>
+        <div className="text-center py-12"></div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {blogs.map((blog) => (
@@ -172,9 +171,7 @@ export default async function BlogList() {
 
                 {/* Title */}
                 <h2 className="text-xl font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                  <Link href={`/blog/${blog.id}`}>
-                    {blog.title}
-                  </Link>
+                  <Link href={`/blog/${blog.id}`}>{blog.title}</Link>
                 </h2>
 
                 {/* Excerpt */}
@@ -197,8 +194,10 @@ export default async function BlogList() {
                     href={`/blog/${blog.id}`}
                     className="text-primary hover:text-primary/80 font-medium text-sm inline-flex items-center gap-1"
                   >
-                    Read more 
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
+                    Read more
+                    <span className="group-hover:translate-x-1 transition-transform">
+                      →
+                    </span>
                   </Link>
                 </div>
               </div>

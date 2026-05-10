@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { prisma } from "@/app/lib/prisma";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // Enable static generation and caching
 export const revalidate = 60; // Revalidate every 60 seconds
@@ -14,14 +14,14 @@ export async function generateStaticParams() {
   try {
     const blogs = await prisma.blog.findMany({
       select: { id: true },
-      take: 10 // Limit to most recent 10 blogs for build time
+      take: 10, // Limit to most recent 10 blogs for build time
     });
 
     return blogs.map((blog) => ({
       id: blog.id,
     }));
   } catch (error) {
-    console.error('Error generating static params:', error);
+    console.error("Error generating static params:", error);
     return [];
   }
 }
@@ -38,18 +38,22 @@ export interface BlogData {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const resolvedParams = await params;
-  
+
   try {
     const blog = await prisma.blog.findUnique({
-      where: { id: resolvedParams.id }
+      where: { id: resolvedParams.id },
     });
 
     if (!blog) {
       return {
-        title: 'Blog Not Found',
-        description: 'The requested blog post could not be found.'
+        title: "Blog Not Found",
+        description: "The requested blog post could not be found.",
       };
     }
 
@@ -64,20 +68,24 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
     };
   } catch {
     return {
-      title: 'Blog',
-      description: 'Blog post'
+      title: "Blog",
+      description: "Blog post",
     };
   }
 }
 
 // Server component for dynamic blog page
-export default async function BlogReadPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function BlogReadPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   let blog: BlogData | null = null;
-  
+
   try {
     const resolvedParams = await params;
     const blogData = await prisma.blog.findUnique({
-      where: { id: resolvedParams.id }
+      where: { id: resolvedParams.id },
     });
 
     if (!blogData) {
@@ -92,18 +100,18 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
       readTime: blogData.readTime,
       tags: blogData.tags,
       featuredImage: blogData.featuredImage,
-      content: blogData.content
+      content: blogData.content,
     };
   } catch (error) {
-    console.error('Error fetching blog:', error);
+    console.error("Error fetching blog:", error);
     notFound();
   }
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
+    return new Date(dateString).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
     });
   };
 
@@ -180,7 +188,9 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
             {blog.content}
           </ReactMarkdown>
         ) : (
-          <p className="text-muted-foreground italic">No content available for this blog post.</p>
+          <p className="text-muted-foreground italic">
+            No content available for this blog post.
+          </p>
         )}
       </div>
 
@@ -189,7 +199,8 @@ export default async function BlogReadPage({ params }: { params: Promise<{ id: s
         <div className="flex justify-between items-center">
           <div>
             <p className="text-sm text-muted-foreground">
-              Published by <span className="font-medium text-foreground">{blog.author}</span>
+              Published by{" "}
+              <span className="font-medium text-foreground">{blog.author}</span>
             </p>
             <p className="text-sm text-muted-foreground">
               {formatDate(blog.publishedAt)}

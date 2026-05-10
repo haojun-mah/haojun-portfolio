@@ -1,31 +1,31 @@
 "use client";
 
-import { useState, useRef, ChangeEvent, DragEvent } from 'react';
-import { useRouter } from 'next/navigation';
-import { BlogData } from './types';
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+import { useState, useRef, ChangeEvent, DragEvent } from "react";
+import { useRouter } from "next/navigation";
+import { BlogData } from "./types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export default function CreateBlogForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const [featuredImageFile, setFeaturedImageFile] = useState<File | null>(null);
-  
+
   const [formData, setFormData] = useState<BlogData>({
-    title: '',
-    author: 'Hao Jun',
-    publishedAt: new Date().toISOString().split('T')[0],
-    readTime: '',
+    title: "",
+    author: "Hao Jun",
+    publishedAt: new Date().toISOString().split("T")[0],
+    readTime: "",
     tags: [],
-    featuredImage: '',
-    content: ''
+    featuredImage: "",
+    content: "",
   });
 
-  const [newTag, setNewTag] = useState('');
+  const [newTag, setNewTag] = useState("");
 
   const handleDragOver = (e: DragEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
@@ -35,10 +35,10 @@ export default function CreateBlogForm() {
   const handleDrop = async (e: DragEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    
+
     if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
       const file = e.dataTransfer.files[0];
-      if (file.type.startsWith('image/')) {
+      if (file.type.startsWith("image/")) {
         await uploadImageToMarkdown(file);
       }
     }
@@ -46,94 +46,108 @@ export default function CreateBlogForm() {
 
   const uploadImageToMarkdown = async (file: File) => {
     if (!textareaRef.current) return;
-    
+
     const textarea = textareaRef.current;
     const startPos = textarea.selectionStart;
     const endPos = textarea.selectionEnd;
-    
+
     const placeholder = `![Uploading ${file.name}...]()\n`;
-    
-    const newContent = 
+
+    const newContent =
       formData.content.substring(0, startPos) +
       placeholder +
       formData.content.substring(endPos);
-      
-    setFormData(prev => ({ ...prev, content: newContent }));
-    
+
+    setFormData((prev) => ({ ...prev, content: newContent }));
+
     try {
       const formDataUpload = new FormData();
-      formDataUpload.append('file', file);
-      
-      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
-        method: 'POST',
-        body: file, // sending file directly to vercel blob per doc approach
-      });
-      
+      formDataUpload.append("file", file);
+
+      const response = await fetch(
+        `/api/upload?filename=${encodeURIComponent(file.name)}`,
+        {
+          method: "POST",
+          body: file, // sending file directly to vercel blob per doc approach
+        },
+      );
+
       if (!response.ok) {
-        throw new Error('Upload failed');
+        throw new Error("Upload failed");
       }
-      
+
       const data = await response.json();
-      
-      setFormData(prev => ({
+
+      setFormData((prev) => ({
         ...prev,
-        content: prev.content.replace(placeholder, `![${file.name}](${data.url})\n`)
+        content: prev.content.replace(
+          placeholder,
+          `![${file.name}](${data.url})\n`,
+        ),
       }));
     } catch (err) {
-      setFormData(prev => ({
+      setFormData((prev) => ({
         ...prev,
-        content: prev.content.replace(placeholder, `![Failed to upload ${file.name}]()\n`)
+        content: prev.content.replace(
+          placeholder,
+          `![Failed to upload ${file.name}]()\n`,
+        ),
       }));
       console.error(err);
-      alert('Failed to upload image');
+      alert("Failed to upload image");
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setError('');
-    setSuccess('');
+    setError("");
+    setSuccess("");
 
     try {
       // Validate
-      if (!formData.title.trim()) throw new Error('Title is required');
-      if (!formData.content.trim()) throw new Error('Content is required');
-      
+      if (!formData.title.trim()) throw new Error("Title is required");
+      if (!formData.content.trim()) throw new Error("Content is required");
+
       let finalFeaturedImageUrl = formData.featuredImage;
       if (featuredImageFile) {
-        const uploadRes = await fetch(`/api/upload?filename=${encodeURIComponent(featuredImageFile.name)}`, {
-          method: 'POST',
-          body: featuredImageFile
-        });
-        if (!uploadRes.ok) throw new Error('Featured image upload failed');
+        const uploadRes = await fetch(
+          `/api/upload?filename=${encodeURIComponent(featuredImageFile.name)}`,
+          {
+            method: "POST",
+            body: featuredImageFile,
+          },
+        );
+        if (!uploadRes.ok) throw new Error("Featured image upload failed");
         const uploadData = await uploadRes.json();
         finalFeaturedImageUrl = uploadData.url;
       }
 
       const submitData = new FormData();
-      submitData.append('blogData', JSON.stringify({...formData, featuredImage: finalFeaturedImageUrl}));
+      submitData.append(
+        "blogData",
+        JSON.stringify({ ...formData, featuredImage: finalFeaturedImageUrl }),
+      );
 
-      const response = await fetch('/api/blogs', {
-        method: 'POST',
+      const response = await fetch("/api/blogs", {
+        method: "POST",
         body: submitData,
       });
 
       const result = await response.json();
 
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to create blog');
+        throw new Error(result.error || "Failed to create blog");
       }
 
-      setSuccess('Blog created successfully!');
+      setSuccess("Blog created successfully!");
       setTimeout(() => {
-        router.push('/blog');
+        router.push("/blog");
         router.refresh();
       }, 1500);
-
     } catch (err) {
       const error = err as Error;
-      setError(error.message || 'An error occurred');
+      setError(error.message || "An error occurred");
       console.error(error);
     } finally {
       setLoading(false);
@@ -158,13 +172,15 @@ export default function CreateBlogForm() {
           <div className="lg:col-span-1 space-y-6">
             <div className="bg-card p-6 rounded-lg border shadow-sm space-y-4">
               <h2 className="text-xl font-semibold mb-4">Meta Info</h2>
-              
+
               <div>
                 <label className="block text-sm font-medium mb-1">Title</label>
                 <input
                   type="text"
                   value={formData.title}
-                  onChange={e => setFormData({ ...formData, title: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, title: e.target.value })
+                  }
                   className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                 />
@@ -175,7 +191,9 @@ export default function CreateBlogForm() {
                 <input
                   type="text"
                   value={formData.author}
-                  onChange={e => setFormData({ ...formData, author: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, author: e.target.value })
+                  }
                   className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   required
                 />
@@ -187,17 +205,23 @@ export default function CreateBlogForm() {
                   <input
                     type="date"
                     value={formData.publishedAt}
-                    onChange={e => setFormData({ ...formData, publishedAt: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, publishedAt: e.target.value })
+                    }
                     className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     required
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1">Read Time</label>
+                  <label className="block text-sm font-medium mb-1">
+                    Read Time
+                  </label>
                   <input
                     type="text"
                     value={formData.readTime}
-                    onChange={e => setFormData({ ...formData, readTime: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, readTime: e.target.value })
+                    }
                     placeholder="e.g. 5 min read"
                     className="w-full rounded-md border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                   />
@@ -210,13 +234,19 @@ export default function CreateBlogForm() {
                   <input
                     type="text"
                     value={newTag}
-                    onChange={e => setNewTag(e.target.value)}
-                    onKeyDown={e => {
-                      if (e.key === 'Enter') {
+                    onChange={(e) => setNewTag(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
                         e.preventDefault();
-                        if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-                          setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
-                          setNewTag('');
+                        if (
+                          newTag.trim() &&
+                          !formData.tags.includes(newTag.trim())
+                        ) {
+                          setFormData({
+                            ...formData,
+                            tags: [...formData.tags, newTag.trim()],
+                          });
+                          setNewTag("");
                         }
                       }
                     }}
@@ -226,9 +256,15 @@ export default function CreateBlogForm() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (newTag.trim() && !formData.tags.includes(newTag.trim())) {
-                        setFormData({ ...formData, tags: [...formData.tags, newTag.trim()] });
-                        setNewTag('');
+                      if (
+                        newTag.trim() &&
+                        !formData.tags.includes(newTag.trim())
+                      ) {
+                        setFormData({
+                          ...formData,
+                          tags: [...formData.tags, newTag.trim()],
+                        });
+                        setNewTag("");
                       }
                     }}
                     className="px-3 py-2 bg-secondary text-secondary-foreground rounded-md text-sm font-medium"
@@ -237,12 +273,20 @@ export default function CreateBlogForm() {
                   </button>
                 </div>
                 <div className="flex flex-wrap gap-2 mt-3">
-                  {formData.tags.map(tag => (
-                    <span key={tag} className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md text-xs">
+                  {formData.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="flex items-center gap-1 bg-primary/10 text-primary px-2 py-1 rounded-md text-xs"
+                    >
                       {tag}
                       <button
                         type="button"
-                        onClick={() => setFormData({ ...formData, tags: formData.tags.filter(t => t !== tag) })}
+                        onClick={() =>
+                          setFormData({
+                            ...formData,
+                            tags: formData.tags.filter((t) => t !== tag),
+                          })
+                        }
                         className="hover:text-destructive"
                       >
                         ×
@@ -253,7 +297,9 @@ export default function CreateBlogForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-1">Featured Image</label>
+                <label className="block text-sm font-medium mb-1">
+                  Featured Image
+                </label>
                 <input
                   type="file"
                   accept="image/*"
@@ -270,10 +316,12 @@ export default function CreateBlogForm() {
                   type="submit"
                   disabled={loading}
                   className={`w-full py-3 px-4 rounded-md font-medium text-primary-foreground transition-colors ${
-                    loading ? 'bg-primary/50 cursor-not-allowed' : 'bg-primary hover:bg-primary/90'
+                    loading
+                      ? "bg-primary/50 cursor-not-allowed"
+                      : "bg-primary hover:bg-primary/90"
                   }`}
                 >
-                  {loading ? 'Publishing...' : 'Publish Blog Post'}
+                  {loading ? "Publishing..." : "Publish Blog Post"}
                 </button>
               </div>
             </div>
@@ -285,12 +333,16 @@ export default function CreateBlogForm() {
               <div className="flex flex-col h-full">
                 <div className="p-3 border-b bg-muted/50 font-medium text-sm flex justify-between items-center">
                   <span>Markdown Editor</span>
-                  <span className="text-xs text-muted-foreground font-normal">Drop images here</span>
+                  <span className="text-xs text-muted-foreground font-normal">
+                    Drop images here
+                  </span>
                 </div>
                 <textarea
                   ref={textareaRef}
                   value={formData.content}
-                  onChange={e => setFormData({ ...formData, content: e.target.value })}
+                  onChange={(e) =>
+                    setFormData({ ...formData, content: e.target.value })
+                  }
                   onDragOver={handleDragOver}
                   onDrop={handleDrop}
                   placeholder="Start writing using Markdown... Drop images here to upload!"
@@ -298,7 +350,7 @@ export default function CreateBlogForm() {
                   spellCheck="false"
                 />
               </div>
-              
+
               {/* Preview */}
               <div className="flex flex-col h-full overflow-hidden">
                 <div className="p-3 border-b bg-muted/50 font-medium text-sm shrink-0">
@@ -307,7 +359,7 @@ export default function CreateBlogForm() {
                 <div className="flex-1 overflow-y-auto p-6 bg-background">
                   <article className="prose dark:prose-invert prose-p:leading-relaxed prose-pre:bg-muted prose-pre:text-muted-foreground prose-img:rounded-md max-w-none">
                     <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                      {formData.content || '*Preview will appear here...*'}
+                      {formData.content || "*Preview will appear here...*"}
                     </ReactMarkdown>
                   </article>
                 </div>

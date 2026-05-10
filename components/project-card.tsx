@@ -127,98 +127,101 @@ export function ProjectCard({
             <CardTitle className="mt-1 text-base">{title}</CardTitle>
             <time className="font-sans text-xs font-medium">{dates}</time>
             <div className="hidden font-sans text-xs underline print:visible">
-              {link?.replace("https://", "").replace("www.", "").replace("/", "")}
+              {link
+                ?.replace("https://", "")
+                .replace("www.", "")
+                .replace("/", "")}
             </div>
-          <Markdown className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert font-medium">
-            {description}
-          </Markdown>
-        </div>
-      </CardHeader>
-      <CardContent className="mt-auto flex flex-col px-2">
-        {tags && tags.length > 0 && (
-          <div className="mt-2 flex flex-wrap gap-1">
-            {tags?.map((tag) => (
-              <Badge
-                className="px-1 py-0 text-[10px]"
-                variant="secondary"
-                key={tag}
-              >
-                {tag}
-              </Badge>
-            ))}
+            <Markdown className="prose max-w-full text-pretty font-sans text-xs text-muted-foreground dark:prose-invert font-medium">
+              {description}
+            </Markdown>
           </div>
-        )}
-      </CardContent>
-      <CardFooter className="px-2 pb-2">
-        {links && links.length > 0 && (
-          <div className="flex flex-row flex-wrap items-start gap-1">
-            {links?.map((link, idx) => (
-              <Link href={link?.href} key={idx} target="_blank">
-                <Badge className="flex gap-2 px-2 py-1 text-[10px]">
-                  {link.icon}
-                  {link.type}
+        </CardHeader>
+        <CardContent className="mt-auto flex flex-col px-2">
+          {tags && tags.length > 0 && (
+            <div className="mt-2 flex flex-wrap gap-1">
+              {tags?.map((tag) => (
+                <Badge
+                  className="px-1 py-0 text-[10px]"
+                  variant="secondary"
+                  key={tag}
+                >
+                  {tag}
                 </Badge>
-              </Link>
-            ))}
-          </div>
-        )}
-      </CardFooter>
-    </Card>
+              ))}
+            </div>
+          )}
+        </CardContent>
+        <CardFooter className="px-2 pb-2">
+          {links && links.length > 0 && (
+            <div className="flex flex-row flex-wrap items-start gap-1">
+              {links?.map((link, idx) => (
+                <Link href={link?.href} key={idx} target="_blank">
+                  <Badge className="flex gap-2 px-2 py-1 text-[10px]">
+                    {link.icon}
+                    {link.type}
+                  </Badge>
+                </Link>
+              ))}
+            </div>
+          )}
+        </CardFooter>
+      </Card>
 
-    {/* Video Modal */}
-    <AnimatePresence>
-      {isVideoModalOpen && video && (
-        <>
-          {/* Backdrop */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
-            onClick={handleCloseModal}
-          >
-            {/* Video Modal */}
+      {/* Video Modal */}
+      <AnimatePresence>
+        {isVideoModalOpen && video && (
+          <>
+            {/* Backdrop */}
             <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-[95vw] max-w-6xl max-h-[90vh]"
-              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.3 }}
+              className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+              onClick={handleCloseModal}
             >
-              <div className="aspect-video w-full bg-black rounded-lg shadow-2xl overflow-hidden">
-                {youtubeId ? (
-                  <iframe
-                    src={`https://www.youtube.com/embed/${youtubeId}`}
-                    title={`${title} YouTube player`}
-                    className="w-full h-full"
-                    allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerPolicy="strict-origin-when-cross-origin"
-                    allowFullScreen
-                  />
-                ) : (
-                  <video
-                    src={video}
-                    loop
-                    muted
-                    playsInline
-                    controls
-                    className="w-full h-full object-contain"
-                  />
-                )}
-              </div>
-              <button
-                onClick={handleCloseModal}
-                className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors duration-200 shadow-lg z-10"
+              {/* Video Modal */}
+              <motion.div
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.8 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="relative w-[95vw] max-w-6xl max-h-[90vh]"
+                onClick={(e) => e.stopPropagation()}
               >
-                <X className="w-5 h-5 text-white" />
-              </button>
+                <div className="aspect-video w-full bg-black rounded-lg shadow-2xl overflow-hidden">
+                  {youtubeId ? (
+                    <iframe
+                      src={`https://www.youtube.com/embed/${youtubeId}`}
+                      title={`${title} YouTube player`}
+                      className="w-full h-full"
+                      allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      referrerPolicy="strict-origin-when-cross-origin"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <video
+                      src={video}
+                      loop
+                      muted
+                      playsInline
+                      controls
+                      className="w-full h-full object-contain"
+                    />
+                  )}
+                </div>
+                <button
+                  onClick={handleCloseModal}
+                  className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors duration-200 shadow-lg z-10"
+                >
+                  <X className="w-5 h-5 text-white" />
+                </button>
+              </motion.div>
             </motion.div>
-          </motion.div>
-        </>
-      )}
-    </AnimatePresence>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

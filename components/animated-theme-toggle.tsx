@@ -15,7 +15,11 @@ export function AnimatedThemeToggle() {
 
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" className="size-10 sm:size-12 md:size-14">
+      <Button
+        variant="ghost"
+        size="icon"
+        className="size-10 sm:size-12 md:size-14"
+      >
         <div className="h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6" />
       </Button>
     );
@@ -32,17 +36,17 @@ export function AnimatedThemeToggle() {
       aria-label="Toggle theme"
     >
       <div className="relative w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6">
-        <SunIcon 
+        <SunIcon
           className={`absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-orange-500 transition-all duration-500 transform ${
-            isDark 
-              ? "rotate-90 scale-0 opacity-0" 
+            isDark
+              ? "rotate-90 scale-0 opacity-0"
               : "rotate-0 scale-100 opacity-100"
           }`}
         />
-        <MoonIcon 
+        <MoonIcon
           className={`absolute h-4 w-4 sm:h-5 sm:w-5 md:h-6 md:w-6 text-blue-400 transition-all duration-500 transform ${
-            isDark 
-              ? "rotate-0 scale-100 opacity-100" 
+            isDark
+              ? "rotate-0 scale-100 opacity-100"
               : "-rotate-90 scale-0 opacity-0"
           }`}
         />
