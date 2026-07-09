@@ -2,6 +2,21 @@ import { Icons } from "@/components/icons";
 
 export const workExperience = [
   {
+    company: "Citi",
+    title: "Software Engineer Intern",
+    logoUrl: "/citi.webp",
+    href: "https://example.com",
+    badges: ["Grafana", "Spring Boot", "Java", "Kafka"],
+    start: "May 2026",
+    end: "Aug 2026",
+    description: [
+      "Built a **Grafana** observability dashboard with alerting for a core banking platform, surfacing real-time metrics across **100,000+ daily** corporate account transactions to support operational monitoring.",
+      "Refactored a **Spring Boot (Java)** microservice codebase into shared internal libraries, eliminating code duplication across services and reducing estimated development time for future microservices.",
+      "Developed an end-to-end **Kafka** test suite that injects synthetic transactions and validates downstream service output, ensuring correctness across critical event-driven processing pipelines.",
+    ],
+  },
+
+  {
     company: "Fly Fairly",
     title: "Software Engineer Intern",
     logoUrl: "/flyfairly.png",
@@ -27,17 +42,6 @@ export const workExperience = [
       "Designed and integrated **RAG pipelines** and **LLM-based AI agents** into enterprise SaaS products, enabling context-aware document Q&A; deployed across **10+ client companies**, directly contributing to new product adoption.",
       "Enhanced an AI lip dubbing system by leveraging open-source audio models such as **Kokoro** and the **LatentSync** lip-sync model, enabling multilingual AI video dubbing solutions sold at **$5,000 per license**.",
       "Refactored and modernized multiple web applications using **React** and **FastAPI**, improving UI performance and scalability for the group's **2,000 users**.",
-    ],
-  },
-  {
-    company: "Lyza Education",
-    title: "Software Engineer Intern",
-    logoUrl: "/lyzaeducation.jpg",
-    badges: ["Python", "JavaScript", "Teaching"],
-    start: "Mar 2024",
-    end: "May 2024",
-    description: [
-      "Built and deployed a web-based learning management tool in **Next.js** used by **100+ students** to submit assignments, track progress, and receive automated feedback on programming exercises.",
     ],
   },
   {
@@ -131,24 +135,6 @@ export const projectData = [
     ],
     image: "",
     video: "https://youtu.be/cE4w29sNgLQ",
-  },
-  {
-    title: "Orbital Project Log Generator",
-    href: "https://github.com/haojun-mah/orbital-projectlog-generator",
-    dates: "July 2025",
-    active: false,
-    description:
-      "I was frustrated at how long and tedious it takes to create a project log for Orbital. As the project log task messages are identical or similar to git commit messages, it is possible to create a project log file from git commit data. Hence, I built a script in python which convert git commit data into a project log CSV file. The script also has option to use Groq API key to estimate hours spent on task as well.",
-    technologies: ["Python", "Groq API", "Github API"],
-    links: [
-      {
-        type: "GitHub",
-        href: "https://github.com/haojun-mah/orbital-projectlog-generator",
-        icon: <Icons.github className="size-3" />,
-      },
-    ],
-    image: "",
-    video: "https://youtu.be/O3_bBsJRbgQ",
   },
   {
     title: "GroceryPicker",
