@@ -237,7 +237,7 @@ export const projectData = [
 export const DATA = {
   navbar: [
     { href: "/home", icon: Icons.home, label: "Home" },
-    { href: "/blog", icon: Icons.book, label: "Blog" },
+    { href: "/blog", icon: Icons.book, label: "Blog", disabled: true },
   ],
   contact: {
     social: {
