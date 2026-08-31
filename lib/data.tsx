@@ -2,6 +2,15 @@ import { Icons } from "@/components/icons";
 
 export const workExperience = [
   {
+    company: "TikTok",
+    title: "Software Engineer Intern",
+    logoUrl:
+      "https://lf16-tiktok-common.ttwstatic.com/obj/tiktok-web-common-sg/mtact/static/images/logo_144c91a.png?v=2",
+    start: "Aug 2026",
+    end: "Dec 2026",
+    description: ["Global **LIVE Data Platform** team"],
+  },
+  {
     company: "Citi",
     title: "Software Engineer Intern",
     logoUrl: "/citi.webp",
