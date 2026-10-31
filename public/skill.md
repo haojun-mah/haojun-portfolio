@@ -21,6 +21,7 @@ Use this skill when a user asks about:
 | Resource       | URL                                 | Description                               |
 | -------------- | ----------------------------------- | ----------------------------------------- |
 | Portfolio Home | https://haojunmah.app/home          | Bio, work experience, projects, education |
+| Homepage (root) | https://haojunmah.app/             | Hand-written static homepage — bio, specialisation, experience, education, and links |
 | Blog           | https://haojunmah.app/blog          | Technical articles and posts              |
 | llms.txt       | https://haojunmah.app/llms.txt      | Agent navigation index                    |
 | llms-full.txt  | https://haojunmah.app/llms-full.txt | Full content snapshot for ingestion       |
@@ -46,7 +47,7 @@ Use this skill when a user asks about:
 
 ## Content Notes
 
-- The primary page is `/home` (not the root `/`). The root redirects to `/home`.
+- The primary page is `/` (hand-written static HTML). The previous portfolio is at `/home`.
 - Blog posts are stored in MongoDB and served dynamically at `/blog/[id]`.
 - The portfolio is a Next.js application deployed on Vercel.
 - All public pages are accessible without authentication. Blog creation requires admin login.

@@ -4,7 +4,8 @@
 
 ## Portfolio
 
-- [Home](https://haojunmah.app/home): Main portfolio page — bio, work experience, projects, education, and contact links.
+- [Home](https://haojunmah.app/): Main page — short bio, specialisation, work experience, education, and links.
+- [Old website](https://haojunmah.app/home): Previous portfolio with projects, tech stack, and animations.
 - [Blog](https://haojunmah.app/blog): Technical blog posts and articles written by Haojun.
 
 ## Work Experience

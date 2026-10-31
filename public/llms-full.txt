@@ -136,7 +136,8 @@ A first-person shooting trainer inspired by KovaaK's Aim Trainer. Built with a c
 
 ## Pages
 
-- [Home](https://haojunmah.app/home): Full portfolio with bio, work experience, projects, education.
+- [Home](https://haojunmah.app/): Main page — short bio, specialisation, work experience, education, and links.
+- [Old website](https://haojunmah.app/home): Previous portfolio with projects, tech stack, and animations.
 - [Blog](https://haojunmah.app/blog): Technical posts and articles.
 
 ---
